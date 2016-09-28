@@ -1,16 +1,15 @@
 package com.example.sanjeev.alumninetwork.networking;
 
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.example.sanjeev.alumninetwork.R;
-import com.example.sanjeev.alumninetwork.json_model.json_format;
-
+import com.example.sanjeev.alumninetwork.json_model.android_versions;
 import java.util.List;
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -21,36 +20,32 @@ import retrofit.client.Response;
     public class show_data extends AppCompatActivity implements ListView.OnItemClickListener {
 
         //Root URL of our web service
-        public static final String ROOT_URL = "http://getsanjeev.esy.es/";
-
-        //Strings to bind with intent will be used to send data to other activity
-        public static final String KEY_BOOK_ID = "key_book_id";
-        public static final String KEY_BOOK_NAME = "key_book_name";
-        public static final String KEY_BOOK_PRICE = "key_book_price";
-        public static final String KEY_BOOK_STOCK = "key_book_stock";
+        public static final String ROOT_URL = "http://api.learn2crack.com/";
 
         //List view to show data
         private ListView listView;
 
         //List of type books this list will store type Book which is our data model
-        private List<json_format> location_data;
+        private List<android_versions> android_list;
 
         @Override
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.list_display);
-
+            Log.e("msg_1", "content set");
             //Initializing the list view
             listView = (ListView) findViewById(R.id.list_locations);
 
             //Calling the method that will fetch data
-            get_Location_data();
+            get_android_data();
+            Log.e("msg_2", "get data called");
 
             //Setting onItemClickListener to listview
-            listView.setOnItemClickListener(this);
+           // listView.setOnItemClickListener(this);
+
         }
 
-        private void get_Location_data(){
+        private void get_android_data(){
             //While the app fetched data we are displaying a progress dialog
             final ProgressDialog loading = ProgressDialog.show(this,"Fetching Data","Please wait...",false,false);
 
@@ -63,22 +58,28 @@ import retrofit.client.Response;
             request api = adapter.create(request.class);
 
             //Defining the method
-            api.get_location_details(new Callback<List<json_format>>() {
+            api.get_android_details(new Callback<List<android_versions>>() {
                 @Override
-                public void success(List<json_format> list, Response response) {
+                public void success(List<android_versions> list, Response response) {
                     //Dismissing the loading progressbar
+                    Log.e("alpha ji", "entered in function get andoid details");
                     loading.dismiss();
 
                     //Storing the data in our list
-                    location_data = list;
+                    android_list = list;
 
                     //Calling a method to show the list
+
+                    Log.e("alpha ji", "show thw list");
                     showList();
+                    Log.e("alpha ji", " just showing the  list");
                 }
 
                 @Override
                 public void failure(RetrofitError error) {
                     //you can handle the errors here
+                    Log.e("alpha ji", "retrofit rrror me ja rha");
+                    Log.e("alpha ji", error.toString());
                 }
             });
         }
@@ -86,12 +87,13 @@ import retrofit.client.Response;
         //Our method to show list
         private void showList(){
             //String array to store all the book names
-            String[] items = new String[location_data.size()];
+            String[] items = new String[android_list.size()];
 
             //Traversing through the whole list to get all the names
-            for(int i=0; i<location_data.size(); i++){
+            for(int i=0; i<android_list.size(); i++){
                 //Storing names to string array
-                items[i] = location_data.get(i).getlatitude();
+                items[i] = android_list.get(i).getname();
+                Log.e("items at i", items[i]);
             }
 
             //Creating an array adapter for list view

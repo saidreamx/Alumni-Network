@@ -6,13 +6,11 @@ public class json_format {
         private String latitude;
         private String longitude;
         private String time;
-
         //Getters and setters
-
-       public String getlatitude(){
+    public String getlatitude(){
            return latitude;
        }
-        public void setlatitude(String latitude){
+    public void setlatitude(String latitude){
             this.latitude = latitude;
         }
 
@@ -26,9 +24,7 @@ public class json_format {
     public String gettime(){
         return time;
     }
-    public void settime(String time){
-        this.time = time;
-    }
+    public void settime(String time) {this.time = time;}
 
     }
 
