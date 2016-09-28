@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Alumni Network</string>
+    <string name="get_data">SHOW ME LIST</string>
 </resources>
