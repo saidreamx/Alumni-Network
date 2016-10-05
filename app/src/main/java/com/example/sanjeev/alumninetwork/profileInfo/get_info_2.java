@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,6 +15,7 @@ import java.util.List;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
+import retrofit.client.OkClient;
 import retrofit.client.Response;
 
 
@@ -21,14 +23,14 @@ import retrofit.client.Response;
 public class get_info_2 extends AppCompatActivity  {
 
     //Root URL of our web service
-    public static final String ROOT_URL = "http://api.learn2crack.com/";
+    public static final String ROOT_URL = "https://api.learn2crack.com/";
 
     //Strings to bind with intent will be used to send data to other activity
     //List view to show data
     private ListView listView;
 
     //List of type books this list will store type Book which is our data model
-    private List<wrapper_android_model> android_list;
+    wrapper_android_model responseData;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,14 +59,14 @@ public class get_info_2 extends AppCompatActivity  {
         android_interface_2 api = adapter.create(android_interface_2.class);
 
         //Defining the method
-        api.getAndroid(new Callback<List<wrapper_android_model>>() {
+        api.getAndroid(new Callback<wrapper_android_model>() {
             @Override
-            public void success(List<wrapper_android_model> list, Response response) {
+            public void success(wrapper_android_model list, Response response) {
                 //Dismissing the loading progressbar
                 loading.dismiss();
 
                 //Storing the data in our list
-                android_list = list;
+                responseData = list;
 
                 //Calling a method to show the list
                 showList();
@@ -73,6 +75,7 @@ public class get_info_2 extends AppCompatActivity  {
             @Override
             public void failure(RetrofitError error) {
                 //you can handle the errors here
+                Log.d("Tag", error.getBody().toString());
             }
         });
     }
@@ -80,12 +83,12 @@ public class get_info_2 extends AppCompatActivity  {
     //Our method to show list
     private void showList(){
         //String array to store all the book names
-        String[] items = new String[android_list.size()];
+        String[] items = new String[responseData.getAndroid().size()];
 
         //Traversing through the whole list to get all the names
-        for(int i=0; i<android_list.size(); i++){
+        for(int i=0; i<responseData.getAndroid().size(); i++){
             //Storing names to string array
-            items[i] = android_list.get(i).getAndroid().toString();
+            items[i] = responseData.getAndroid().get(i).getname();
         }
 
         //Creating an array adapter for list view

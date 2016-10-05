@@ -7,5 +7,5 @@ import retrofit.http.GET;
 public interface android_interface {
 
     @GET("/android/jsonandroid/")
-    public void getAndroid(Callback<List<android_model>> response);
+    void getAndroid(Callback<List<android_model>> response);
 }
