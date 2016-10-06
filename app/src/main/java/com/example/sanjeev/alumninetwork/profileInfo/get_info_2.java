@@ -61,12 +61,12 @@ public class get_info_2 extends AppCompatActivity  {
         //Defining the method
         api.getAndroid(new Callback<wrapper_android_model>() {
             @Override
-            public void success(wrapper_android_model list, Response response) {
+            public void success(wrapper_android_model object_1, Response response) {
                 //Dismissing the loading progressbar
                 loading.dismiss();
 
                 //Storing the data in our list
-                responseData = list;
+                responseData = object_1;
 
                 //Calling a method to show the list
                 showList();
@@ -84,16 +84,15 @@ public class get_info_2 extends AppCompatActivity  {
     private void showList(){
         //String array to store all the book names
         String[] items = new String[responseData.getAndroid().size()];
-
         //Traversing through the whole list to get all the names
         for(int i=0; i<responseData.getAndroid().size(); i++){
             //Storing names to string array
-            items[i] = responseData.getAndroid().get(i).getname();
+            Log.e("in LOOP", "xyZZZ");
+            items[i] = responseData.getAndroid().get(i).getapi() +  responseData.getAndroid().get(i).getver();
         }
 
         //Creating an array adapter for list view
-        ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.list_items,items);
-
+        ArrayAdapter adapter = new ArrayAdapter<String>(this,R.layout.list_items, items);
         //Setting adapter to listview
         listView.setAdapter(adapter);
     }

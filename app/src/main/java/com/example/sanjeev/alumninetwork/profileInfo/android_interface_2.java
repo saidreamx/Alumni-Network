@@ -1,5 +1,4 @@
 package com.example.sanjeev.alumninetwork.profileInfo;
-import java.util.List;
 import retrofit.Callback;
 import retrofit.http.GET;
 
