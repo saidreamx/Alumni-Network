@@ -11,7 +11,7 @@
 
 
 
-        <activity android:name=".profileInfo.get_info_2">
+        <activity android:name=".peopleList.stableAdapterUse">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
