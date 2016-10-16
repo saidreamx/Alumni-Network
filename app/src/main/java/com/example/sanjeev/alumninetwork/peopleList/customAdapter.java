@@ -3,69 +3,40 @@ package com.example.sanjeev.alumninetwork.peopleList;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
+import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.sanjeev.alumninetwork.R;
-import com.example.sanjeev.alumninetwork.profileInfo.get_info_2;
 
-public class customAdapter extends BaseAdapter{
-    String [] result;
-    Context context;
-    int [] imageId;
-    private static LayoutInflater inflater=null;
-    public  customAdapter(get_info_2 mainActivity, String[] prgmNameList, int[] prgmImages) {
-        result=prgmNameList;
-        context=mainActivity;
-        imageId=prgmImages;
-        inflater = ( LayoutInflater )context.
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-    }
-    @Override
-    public int getCount() {
-        // TODO Auto-generated method stub
-        return result.length;
+public class customAdapter extends ArrayAdapter<String> {
+    private final Context context;
+    private final String [] values;
+
+    public customAdapter (Context context, String[] values) {
+        super(context, R.layout.alumni_row_layout, values);
+        this.context = context;
+        this.values = values;
     }
 
     @Override
-    public Object getItem(int position) {
-        // TODO Auto-generated method stub
-        return position;
-    }
+    public View getView(int position, View convertView, ViewGroup parent) {
+        LayoutInflater inflater = (LayoutInflater) context
+                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View rowView = inflater.inflate(R.layout.alumni_row_layout, parent, false);
+        TextView textView = (TextView) rowView.findViewById(R.id.label);
+        ImageView imageView = (ImageView) rowView.findViewById(R.id.icon);
+        textView.setText(values[position]);
+        // Change the icon for Windows and iPhone
+        String s = values[position];
+        if (s.startsWith("Windows7") || s.startsWith("iPhone")
+                || s.startsWith("Solaris")) {
+            imageView.setImageResource(R.drawable.images1);
+        } else {
+            imageView.setImageResource(R.drawable.images2);
+        }
 
-    @Override
-    public long getItemId(int position) {
-        // TODO Auto-generated method stub
-        return position;
-    }
-
-    public class Holder
-    {
-        TextView tv;
-        ImageView img;
-    }
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
-        Holder holder=new Holder();
-        View rowView;
-        rowView = inflater.inflate(R.layout.alumni_details_in_list, null);
-        holder.tv=(TextView) rowView.findViewById(R.id.textView1);
-        holder.img=(ImageView) rowView.findViewById(R.id.imageView1);
-        holder.tv.setText(result[position]);
-        holder.img.setImageResource(imageId[position]);
-        rowView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Toast.makeText(context, "You Clicked "+result[position], Toast.LENGTH_LONG).show();
-            }
-        });
         return rowView;
     }
-
 }

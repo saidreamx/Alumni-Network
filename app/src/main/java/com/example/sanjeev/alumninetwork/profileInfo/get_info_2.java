@@ -3,23 +3,16 @@ package com.example.sanjeev.alumninetwork.profileInfo;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import com.example.sanjeev.alumninetwork.R;
-import com.example.sanjeev.alumninetwork.peopleList.customAdapter;
 
-import java.util.ArrayList;
-import java.util.List;
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
-import retrofit.client.OkClient;
 import retrofit.client.Response;
 
 
@@ -27,12 +20,6 @@ import retrofit.client.Response;
 //Class having OnItemClickListener to handle the clicks on list
 public class get_info_2 extends AppCompatActivity  {
 
-    ListView lv;
-    Context context;
-
-    ArrayList prgmName;
-    public static int [] prgmImages={R.drawable.images,R.drawable.images1,R.drawable.images2,R.drawable.images4,R.drawable.images5,R.drawable.images6};
-    public static String [] prgmNameList={"Let Us C","c++","JAVA","Jsp","Microsoft .Net","Android","PHP","Jquery","JavaScript"};
 
     //Root URL of our web service
     public static final String ROOT_URL = "https://api.learn2crack.com/";
@@ -51,10 +38,10 @@ public class get_info_2 extends AppCompatActivity  {
 
         //Initializing the listview
         listView = (ListView) findViewById(R.id.alumni_list);
-        lv.setAdapter(new customAdapter(this, prgmNameList,prgmImages));
+
 
         //Calling the method that will fetch data
-        //getAndroid();
+        getAndroid();
 
         //Setting onItemClickListener to listview
         //listView.setOnItemClickListener(this);
