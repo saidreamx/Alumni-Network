@@ -1,15 +1,14 @@
 package com.example.sanjeev.alumninetwork.signUp;
 
+import android.app.Activity;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
-import android.support.v7.app.AppCompatActivity;
 
 import com.example.sanjeev.alumninetwork.R;
 
-class logIn extends AppCompatActivity
+public class logIn extends Activity
 {
     @Override
-    protected void onCreate(@Nullable Bundle savedInstanceState)
+    protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.log_in);
