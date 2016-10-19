@@ -4,6 +4,8 @@ package com.example.sanjeev.alumninetwork.signUp;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.sanjeev.alumninetwork.R;
+
 public class signUp extends AppCompatActivity
 {
     String[] mUserType=null;
@@ -12,7 +14,7 @@ public class signUp extends AppCompatActivity
     {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.sign_up);
-        mUserType = getResources().getStringArray(R.array.)
+        //mUserType = getResources().getStringArray();
 
 
     }

@@ -12,6 +12,6 @@ class logIn extends AppCompatActivity
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.logIn);
+        //setContentView(R.layout.logIn);
     }
 }
