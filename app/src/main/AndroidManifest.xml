@@ -9,7 +9,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".signUp.signUp">
+        <activity android:name=".profileInfo.onePerson"
+            android:theme = "@style/MyMaterialTheme.Base" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
