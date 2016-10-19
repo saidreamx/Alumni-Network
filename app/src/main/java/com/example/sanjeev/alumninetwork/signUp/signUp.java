@@ -13,7 +13,7 @@ public class signUp extends AppCompatActivity
     protected void onCreate( Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.sign_up);
+        setContentView(R.layout.register);
         //mUserType = getResources().getStringArray();
 
 
