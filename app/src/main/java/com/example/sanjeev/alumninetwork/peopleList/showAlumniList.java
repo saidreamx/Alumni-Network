@@ -22,9 +22,9 @@ public class showAlumniList extends ListActivity {
                 "Blackberry", "WebOS", "Ubuntu", "Windows7", "Max OS X",
                 "Linux", "OS/2" };*/
         ArrayList<alumniListModel> values= new ArrayList<alumniListModel>();
-        customAdapter adapter = new customAdapter(this, values);
+        /*customAdapter adapter = new customAdapter(this, values);
         setListAdapter(adapter);
-    }
+    */}
 
     @Override
     protected void onListItemClick(ListView l, View v, int position, long id) {

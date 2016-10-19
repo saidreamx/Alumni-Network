@@ -1,4 +1,24 @@
 <resources>
     <string name="app_name">Alumni Network</string>
     <string name="get_data">SHOW ME LIST</string>
+    <string-array name="userType">
+        <item>Alumni</item>
+        <item>Faculty</item>
+        <item>Student</item>
+    </string-array>
+
+    <string-array name="place_type">
+        <item>airport</item>
+        <item>atm</item>
+        <item>bank</item>
+        <item>bus_station</item>
+        <item>church</item>
+        <item>doctor</item>
+        <item>hospital</item>
+        <item>mosque</item>
+        <item>movie_theater</item>
+        <item>hindu_temple</item>
+        <item>restaurant</item>
+    </string-array>
+
 </resources>
