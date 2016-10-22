@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#c5c8cc"
+    >
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        >
+
+             <EditText
+                android:id="@+id/email_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Address"
+                android:layout_marginTop="10dp"
+                android:textColor="#143160"
+                android:inputType="textLongMessage"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                />
+            <EditText
+                android:id="@+id/pass_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:hint="Password"
+                android:textColor="#143160"
+                android:inputType="textPassword"
+                android:layout_below="@+id/email_edit"
+                android:layout_alignLeft="@+id/email_edit"
+                android:layout_alignRight="@+id/email_edit" />
+        <EditText
+            android:id="@+id/mobile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Contact Number"
+            android:textColor="#143160"
+            android:inputType="text|number"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            />
+            <EditText
+                android:id="@+id/cnfmpass_edit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Confirm Password"
+                android:layout_marginTop="10dp"
+                android:textColor="#143160"
+                android:inputType="textPassword"
+                android:layout_alignParentStart="true"
+                android:layout_alignLeft="@+id/pass_edit"
+                android:layout_alignRight="@+id/pass_edit" />
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/login_option"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="This is not me! Help"
+        android:layout_above="@+id/sign_up"
+        android:background="#c5c8cc" />
+
+    <Button
+        android:id="@+id/sign_up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Welcome"
+        android:layout_alignParentBottom="true"
+        android:background="#0f2b59" />
+</RelativeLayout>
