@@ -1,7 +1,9 @@
 package com.example.sanjeev.alumninetwork.signUp;
 import android.content.Intent;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,6 +19,9 @@ import com.example.sanjeev.alumninetwork.profileInfo.onePerson;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.util.Map;
+import java.util.Random;
+import java.util.Set;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -26,12 +31,68 @@ import retrofit.client.Response;
 
 public class signUp extends Fragment
 {
-
-
     public static final String ROOT_URL = "http://getsanjeev.esy.es/";
     EditText editTextEmail;
     EditText editTextpassword;
     EditText cnfmPass;
+    SharedPreferences internal_data = new SharedPreferences() {
+        @Override
+        public Map<String, ?> getAll() {
+            return null;
+        }
+
+        @Nullable
+        @Override
+        public String getString(String key, String defValue) {
+            return null;
+        }
+
+        @Nullable
+        @Override
+        public Set<String> getStringSet(String key, Set<String> defValues) {
+            return null;
+        }
+
+        @Override
+        public int getInt(String key, int defValue) {
+            return 0;
+        }
+
+        @Override
+        public long getLong(String key, long defValue) {
+            return 0;
+        }
+
+        @Override
+        public float getFloat(String key, float defValue) {
+            return 0;
+        }
+
+        @Override
+        public boolean getBoolean(String key, boolean defValue) {
+            return false;
+        }
+
+        @Override
+        public boolean contains(String key) {
+            return false;
+        }
+
+        @Override
+        public Editor edit() {
+            return null;
+        }
+
+        @Override
+        public void registerOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
+
+        }
+
+        @Override
+        public void unregisterOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
+
+        }
+    }
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.register, container, false);
@@ -72,20 +133,27 @@ public class signUp extends Fragment
                 else
                 {
                     insertUser(email, password);
-                    Intent intent = new Intent(getActivity(), onePerson.class);
-                    startActivity(intent);
                 }
             }
         });
         return view;
     }
+    public int gen() {
+        Random r = new Random( System.currentTimeMillis() );
+        return 10000 + r.nextInt(20000);
+    }
     private void insertUser(String email, String password)
     {
+        final String emailID;
+        emailID = email;
+        final String subject = "Verification CIC-Swajana";
+        int random_no = gen();
+        final String messagecontent = "Welcome to CIC-Swajana. Your OTP is: "+random_no;
         //Here we will handle the http request to insert user to mysql db
         RestAdapter adapter = new RestAdapter.Builder()
                 .setEndpoint(ROOT_URL) //Setting the Root URL
                 .build();
-
+        final String message;
         Log.e("SECOND","ENTERED ON INSERT USER");
         registerAPI api = adapter.create(registerAPI.class);
         api.insertUser(
@@ -103,6 +171,17 @@ public class signUp extends Fragment
                             reader = new BufferedReader(new InputStreamReader(result.getBody().in()));
                             //Reading the output in the string
                             output = reader.readLine();
+                            if(!output.equals("444"))
+                            {
+                                sendMail sm = new sendMail(getContext(), emailID, subject, messagecontent);
+
+                                //Executing sendmail to send email
+                                sm.execute();
+                                Toast.makeText(getContext(), "Successfully registered", Toast.LENGTH_LONG).show();
+                                Toast.makeText(getContext(), "Verification code sent to Email", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getActivity(), verifyOTP.class);
+                                startActivity(intent);
+                            }
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
