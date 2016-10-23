@@ -16,7 +16,7 @@ import java.util.List;
 
 public class collectionLoginSignup extends AppCompatActivity {
 
-    private ViewPager viewPager;
+    public static ViewPager viewPager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,17 +50,20 @@ public class collectionLoginSignup extends AppCompatActivity {
         private final List<Fragment> mFragmentList = new ArrayList<>();
         private final List<String> mFragmentTitleList = new ArrayList<>();
 
-        public ViewPagerAdapter(FragmentManager manager) {
+        public ViewPagerAdapter(FragmentManager manager)
+        {
             super(manager);
         }
 
         @Override
-        public Fragment getItem(int position) {
+        public Fragment getItem(int position)
+        {
             return mFragmentList.get(position);
         }
 
         @Override
-        public int getCount() {
+        public int getCount()
+        {
             return mFragmentList.size();
         }
 

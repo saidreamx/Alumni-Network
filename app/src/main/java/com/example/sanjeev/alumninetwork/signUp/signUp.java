@@ -3,8 +3,8 @@ import android.content.Intent;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,9 +19,7 @@ import com.example.sanjeev.alumninetwork.profileInfo.onePerson;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Map;
 import java.util.Random;
-import java.util.Set;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -35,64 +33,6 @@ public class signUp extends Fragment
     EditText editTextEmail;
     EditText editTextpassword;
     EditText cnfmPass;
-    SharedPreferences internal_data = new SharedPreferences() {
-        @Override
-        public Map<String, ?> getAll() {
-            return null;
-        }
-
-        @Nullable
-        @Override
-        public String getString(String key, String defValue) {
-            return null;
-        }
-
-        @Nullable
-        @Override
-        public Set<String> getStringSet(String key, Set<String> defValues) {
-            return null;
-        }
-
-        @Override
-        public int getInt(String key, int defValue) {
-            return 0;
-        }
-
-        @Override
-        public long getLong(String key, long defValue) {
-            return 0;
-        }
-
-        @Override
-        public float getFloat(String key, float defValue) {
-            return 0;
-        }
-
-        @Override
-        public boolean getBoolean(String key, boolean defValue) {
-            return false;
-        }
-
-        @Override
-        public boolean contains(String key) {
-            return false;
-        }
-
-        @Override
-        public Editor edit() {
-            return null;
-        }
-
-        @Override
-        public void registerOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
-
-        }
-
-        @Override
-        public void unregisterOnSharedPreferenceChangeListener(OnSharedPreferenceChangeListener listener) {
-
-        }
-    }
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.register, container, false);
@@ -148,6 +88,13 @@ public class signUp extends Fragment
         emailID = email;
         final String subject = "Verification CIC-Swajana";
         int random_no = gen();
+        SharedPreferences internal_data = getActivity().getSharedPreferences("mango", getActivity().MODE_PRIVATE);
+        SharedPreferences.Editor editor = internal_data.edit();
+        editor.putString("OTP", Integer.toString(random_no));
+        editor.putString("emailID", emailID);
+        editor.putString("password", password);
+        editor.putBoolean("signup_check", true);
+        editor.commit();
         final String messagecontent = "Welcome to CIC-Swajana. Your OTP is: "+random_no;
         //Here we will handle the http request to insert user to mysql db
         RestAdapter adapter = new RestAdapter.Builder()
@@ -179,8 +126,8 @@ public class signUp extends Fragment
                                 sm.execute();
                                 Toast.makeText(getContext(), "Successfully registered", Toast.LENGTH_LONG).show();
                                 Toast.makeText(getContext(), "Verification code sent to Email", Toast.LENGTH_SHORT).show();
-                                Intent intent = new Intent(getActivity(), verifyOTP.class);
-                                startActivity(intent);
+                                collectionLoginSignup.viewPager.setCurrentItem(collectionLoginSignup.viewPager.getCurrentItem()+1);
+                                //startActivity(intent);
                             }
                         } catch (IOException e) {
                             e.printStackTrace();
