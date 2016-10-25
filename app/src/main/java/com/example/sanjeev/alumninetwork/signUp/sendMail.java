@@ -4,6 +4,7 @@ package com.example.sanjeev.alumninetwork.signUp;
         import android.app.ProgressDialog;
         import android.content.Context;
         import android.os.AsyncTask;
+        import android.util.Log;
         import android.widget.Toast;
 
         import java.util.Properties;
@@ -38,6 +39,11 @@ public class sendMail extends AsyncTask<Void,Void,Void> {
         this.email = email;
         this.subject = subject;
         this.message = message;
+        Log.e("email",email);
+        Log.e("subject",subject);
+        Log.e("message",message);
+        Log.e("emailID",config.EMAIL);
+        Log.e("passwordSENDER",config.PASSWORD);
     }
 
     @Override
@@ -60,7 +66,6 @@ public class sendMail extends AsyncTask<Void,Void,Void> {
     protected Void doInBackground(Void... params) {
         //Creating properties
         Properties props = new Properties();
-
         //Configuring properties for gmail
         //If you are not using gmail you may need to change the values
         props.put("mail.smtp.host", "smtp.gmail.com");
@@ -69,11 +74,13 @@ public class sendMail extends AsyncTask<Void,Void,Void> {
         props.put("mail.smtp.auth", "true");
         props.put("mail.smtp.port", "465");
 
+        Log.e("POKEMON","session create krne se pehle");
         //Creating a new session
         session = Session.getDefaultInstance(props,
                 new javax.mail.Authenticator() {
                     //Authenticating the password
-                    protected PasswordAuthentication getPasswordAuthentication() {
+                    protected PasswordAuthentication getPasswordAuthentication()
+                    {
                         return new PasswordAuthentication(config.EMAIL, config.PASSWORD);
                     }
                 });
@@ -81,7 +88,6 @@ public class sendMail extends AsyncTask<Void,Void,Void> {
         try {
             //Creating MimeMessage object
             MimeMessage mm = new MimeMessage(session);
-
             //Setting sender address
             mm.setFrom(new InternetAddress(config.EMAIL));
             //Adding receiver
@@ -93,9 +99,11 @@ public class sendMail extends AsyncTask<Void,Void,Void> {
 
             //Sending email
             Transport.send(mm);
+            Log.e("SEND","AGTER Transport.send fn");
 
         } catch (MessagingException e) {
             e.printStackTrace();
+            Log.e("in CATCH",e.toString());
         }
         return null;
     }
