@@ -10,7 +10,7 @@ public interface registerAPI
 {
     @FormUrlEncoded
     @POST("/insert_test.php")
-    public void insertUser
+     void insertUser
             (
             @Field("email") String email,
             @Field("password") String password,

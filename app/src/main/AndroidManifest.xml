@@ -17,6 +17,7 @@
         </activity>
         <activity android:name=".profileInfo.onePerson"
             android:theme = "@style/MyMaterialTheme.Base"/>
+        <activity android:name=".signUp.logIn"/>
 
 
 

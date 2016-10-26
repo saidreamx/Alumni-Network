@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -50,13 +51,12 @@ public class verifyOTP extends Fragment
 
     boolean verify()
     {
-        boolean status;
         SharedPreferences internal_data = getActivity().getSharedPreferences("mango", getActivity().MODE_PRIVATE);
         String otp = internal_data.getString("OTP"," ");
         String entered_otp = OTP.getText().toString();
-        if (otp == entered_otp) status = true;
-        else status = false;
-        return status;
+        Log.e("OTP :", otp);
+        if (otp.equals(entered_otp)) return true;
+        else return false;
     }
 
 }
