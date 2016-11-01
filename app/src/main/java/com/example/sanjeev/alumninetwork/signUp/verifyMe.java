@@ -11,18 +11,31 @@ import android.widget.Button;
 
 import com.example.sanjeev.alumninetwork.R;
 
-public class welcome extends Fragment
+/**
+ * Created by sanjeev on 31/10/16.
+ */
+public class verifyMe extends Fragment
 {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
     {
-        View view = inflater.inflate(R.layout.welcome, container, false);
-        Button welcome = (Button) view.findViewById(R.id.welcome);
-        welcome.setOnClickListener(new View.OnClickListener()
+        View view = inflater.inflate(R.layout.register3, container, false);
+        Button thisIsMe = (Button) view.findViewById(R.id.me_button);
+        Button thisIsNotMe = (Button) view.findViewById(R.id.not_me_button);
+        thisIsMe.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 Intent intent = new Intent(getActivity(), logIn.class);
+                startActivity(intent);
+            }
+        });
+        thisIsNotMe.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(getActivity(), mail_Developer.class);
                 startActivity(intent);
             }
         });

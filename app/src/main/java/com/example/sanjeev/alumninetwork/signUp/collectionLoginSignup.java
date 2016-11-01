@@ -43,6 +43,8 @@ public class collectionLoginSignup extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new signUp(), "ONE");
         adapter.addFragment(new verifyOTP(), "TWO");
+        adapter.addFragment(new verifyMe(), "THREE" );
+        adapter.addFragment(new welcome(),"FOUR");
         viewPager.setAdapter(adapter);
     }
 

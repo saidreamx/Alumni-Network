@@ -120,13 +120,9 @@ public class signUp extends Fragment
                             output = reader.readLine();
                             if(!output.equals("444"))
                             {
-
-
                                 sendMail sm = new sendMail(getContext(), emailID, subject, messagecontent);
-                                Log.e("BATMAN","COPY CREATED");
                                 //Executing sendmail to send email
                                 sm.execute();
-                                Log.e("SUPERMAN","EXECUTE se bahar");
                                 Toast.makeText(getContext(), "Verification code sent to Email", Toast.LENGTH_SHORT).show();
                                 collectionLoginSignup.viewPager.setCurrentItem(collectionLoginSignup.viewPager.getCurrentItem()+1);
                             }

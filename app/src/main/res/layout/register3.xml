@@ -61,18 +61,18 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/login_option"
+        android:id="@+id/not_me_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="This is not me! Help"
-        android:layout_above="@+id/sign_up"
+        android:layout_above="@+id/me_button"
         android:background="#c5c8cc" />
 
     <Button
-        android:id="@+id/sign_up"
+        android:id="@+id/me_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Welcome"
+        android:text="Continue"
         android:layout_alignParentBottom="true"
         android:background="#0f2b59" />
 </RelativeLayout>
