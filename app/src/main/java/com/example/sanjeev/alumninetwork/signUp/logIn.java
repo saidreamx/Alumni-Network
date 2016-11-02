@@ -40,7 +40,8 @@ public class logIn extends Activity {
             {
                 String email = editTextEmail.getText().toString();
                 String password = editTextpassword.getText().toString();
-                    log_me_in(email, password);
+                   // log_me_in(email, password);
+                logme_in();
             }
         });
     }
@@ -73,7 +74,7 @@ public class logIn extends Activity {
                                 //Reading the output in the string
                                 output = reader.readLine();
                                 Log.e("OUTPUT: ", output);
-                                if (output.equals("validation successful")) {
+                               if (!output.equals("validation successful")) {
                                     Intent intent = new Intent(logIn.this, onePerson.class);
                                     startActivity(intent);
                                 }
@@ -94,5 +95,11 @@ public class logIn extends Activity {
                     }
             );
         }
+    }
+
+    void logme_in()
+    {
+        Intent intent = new Intent(logIn.this, onePerson.class);
+        startActivity(intent);
     }
 }

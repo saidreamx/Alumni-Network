@@ -1,6 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.sanjeev.alumninetwork">
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -18,6 +20,8 @@
         <activity android:name=".profileInfo.onePerson"
             android:theme = "@style/MyMaterialTheme.Base"/>
         <activity android:name=".signUp.logIn"/>
+        <activity android:name=".peopleList.showAlumniList"/>
+        <activity android:name=".signUp.mail_Developer"/>
 
 
 

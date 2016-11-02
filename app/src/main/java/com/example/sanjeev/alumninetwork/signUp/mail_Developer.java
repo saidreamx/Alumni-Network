@@ -10,9 +10,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.sanjeev.alumninetwork.R;
+import com.example.sanjeev.alumninetwork.profileInfo.onePerson;
 
 import java.util.Properties;
 
@@ -27,26 +29,38 @@ import javax.mail.internet.MimeMessage;
 
 public class mail_Developer extends AppCompatActivity
 {
+     Button send;
+     EditText email_field;
+     EditText pass_field;
+     EditText meassge_field;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        final Button send = (Button) findViewById(R.id.send);
+        setContentView(R.layout.mail_developers);
+        send = (Button) findViewById(R.id.send);
+        email_field = (EditText) findViewById(R.id.email);
+        pass_field = (EditText) findViewById(R.id.password);
+        meassge_field = (EditText) findViewById(R.id.message);
+
         send.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick(View v)
             {
                 sendMail();
+                Intent intent = new Intent(mail_Developer.this, logIn.class);
+                startActivity(intent);
             }
         });
     }
 
     void sendMail()
     {
-        String emailID =
-        sendMail sm = new sendMail(this, emailID, subject, messagecontent);
-        //Executing sendmail to send email
+        String emailID = email_field.getText().toString();
+        String password = pass_field.getText().toString();
+        String message = meassge_field.getText().toString();
+        sendMail sm = new sendMail(this, emailID, password, message);
         sm.execute();
     }
 
@@ -81,7 +95,7 @@ public class mail_Developer extends AppCompatActivity
         protected void onPreExecute() {
             super.onPreExecute();
             //Showing progress dialog while sending email
-            progressDialog = ProgressDialog.show(context,"Registering","Please wait...",false,false);
+            progressDialog = ProgressDialog.show(context,"Sending Message","Please wait...",false,false);
         }
 
         @Override

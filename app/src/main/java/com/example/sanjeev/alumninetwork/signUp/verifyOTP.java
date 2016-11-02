@@ -32,11 +32,10 @@ public class verifyOTP extends Fragment
                 if(status)
                 {
                     Toast.makeText(getContext(), "Successfully Registered", Toast.LENGTH_SHORT).show();
-                    Intent intent = new Intent(getActivity(), logIn.class);
-                    startActivity(intent);
                     SharedPreferences internal_data = getActivity().getSharedPreferences("mango", getActivity().MODE_PRIVATE);
                     SharedPreferences.Editor editor = internal_data.edit();
                     editor.putBoolean("otp_verify", true);
+                    collectionLoginSignup.viewPager.setCurrentItem(collectionLoginSignup.viewPager.getCurrentItem()+1);
                 }
                 else
                 {

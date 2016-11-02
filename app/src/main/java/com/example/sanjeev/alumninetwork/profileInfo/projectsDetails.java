@@ -17,7 +17,7 @@ public class projectsDetails extends Fragment
                              Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.frag_1, container, false);
+        View view = inflater.inflate(R.layout.frag_2, container, false);
         return view;
     }
 }

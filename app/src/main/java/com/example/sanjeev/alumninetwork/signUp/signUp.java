@@ -32,7 +32,7 @@ public class signUp extends Fragment
     public static final String ROOT_URL = "http://getsanjeev.esy.es/";
     EditText editTextEmail;
     EditText editTextpassword;
-    EditText cnfmPass;
+    EditText cnfm_Password;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.register, container, false);
@@ -41,6 +41,7 @@ public class signUp extends Fragment
         Button login = (Button) view.findViewById(R.id.login_option);
         editTextEmail = (EditText) view.findViewById(R.id.email_edit);
         editTextpassword = (EditText) view.findViewById(R.id.pass_edit);
+        cnfm_Password = (EditText) view.findViewById(R.id.cnfmpass_edit);
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +57,7 @@ public class signUp extends Fragment
                 Log.e("FIRST","ENTERED ON CLICK SIGNUP");
                 String email =  editTextEmail.getText().toString();
                 String password = editTextpassword.getText().toString();
-                String cnfm_password = editTextpassword.getText().toString();
+                String cnfm_password = cnfm_Password.getText().toString();
                 if((!email.contains("@"))||(email.length()<10))
                 {
                     Toast.makeText(getContext(), "Invalid Email", Toast.LENGTH_SHORT).show();
@@ -94,7 +95,7 @@ public class signUp extends Fragment
         editor.putString("emailID", emailID);
         editor.putString("password", password);
         editor.putBoolean("signup_check", true);
-        editor.commit();
+        editor.apply();
         final String messagecontent = "Welcome to CIC-Swajana. Your OTP is: "+random_no;
         //Here we will handle the http request to insert user to mysql db
         RestAdapter adapter = new RestAdapter.Builder()
@@ -118,6 +119,7 @@ public class signUp extends Fragment
                             reader = new BufferedReader(new InputStreamReader(result.getBody().in()));
                             //Reading the output in the string
                             output = reader.readLine();
+                            Log.e("OUPUT LINE", output);
                             if(!output.equals("444"))
                             {
                                 sendMail sm = new sendMail(getContext(), emailID, subject, messagecontent);

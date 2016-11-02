@@ -12,10 +12,7 @@ import com.example.sanjeev.alumninetwork.R;
 import java.util.ArrayList;
 
 public class showAlumniList extends ListActivity {
-    showAlumniList()
-    {
 
-    }
     public void onCreate(Bundle icicle) {
         super.onCreate(icicle);
         /*String[] values = new String[] { "Android", "iPhone", "WindowsMobile",

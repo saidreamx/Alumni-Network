@@ -1,53 +1,69 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#ffffff">
 
-    <TextView
+    <ImageView
+        android:id="@+id/header_imageview"
+        android:layout_width="match_parent"
+        android:src="@drawable/default_cover"
+        android:layout_height="150dp"
+        android:scaleType="centerCrop"
+        android:adjustViewBounds="true"
+
+        />
+
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:id="@+id/informations_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_below="@+id/header_imageview"
+        android:gravity="center"
+        android:background="#054498"
+        android:paddingTop="32dp"
+        android:paddingBottom="32dp">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="SANJEEV"
+            android:textStyle="bold"
+            android:textSize="17dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Cluster Innovation Centre"
+            android:gravity="center"
+            android:textColor="#FF707070"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="New Delhi"
+            android:textColor="#FF909090" />
+
+    </LinearLayout>
+
+
+    <ImageView
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/boydp"
+        android:layout_centerHorizontal="true"
+        android:layout_above="@+id/informations_container"
+        android:layout_marginBottom="-35dp" />
+    <ImageButton
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sanjeev"
-        android:textSize="40dp"
-        android:textStyle="bold"
-        android:layout_centerInParent="true"
-        android:id="@+id/textView" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Live Track"
-        android:id="@+id/track_button"
-        android:layout_marginTop="46dp"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true" />
-
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="PLACES"
-        android:id="@+id/places"
-        android:layout_below="@+id/textView"
-        android:layout_alignRight="@+id/track_button"
-        android:layout_alignEnd="@+id/track_button"
-        android:layout_marginTop="58dp" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="10"
-        android:id="@+id/lat"
-        android:layout_below="@+id/track_button"
-        android:layout_centerHorizontal="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:inputType="numberDecimal"
-        android:ems="10"
-        android:id="@+id/lon"
-        android:layout_above="@+id/textView"
-        android:layout_centerHorizontal="true" />
-
+        android:layout_alignParentRight="true"
+        android:src="@drawable/edit00"
+        android:id="@+id/button_choose"
+        />
 
 </RelativeLayout>

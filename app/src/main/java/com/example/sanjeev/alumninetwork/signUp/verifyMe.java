@@ -26,8 +26,7 @@ public class verifyMe extends Fragment
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(getActivity(), logIn.class);
-                startActivity(intent);
+                collectionLoginSignup.viewPager.setCurrentItem(collectionLoginSignup.viewPager.getCurrentItem()+1);
             }
         });
         thisIsNotMe.setOnClickListener(new View.OnClickListener()
