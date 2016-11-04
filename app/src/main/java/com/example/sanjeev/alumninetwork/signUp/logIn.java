@@ -41,7 +41,8 @@ public class logIn extends Activity {
                 String email = editTextEmail.getText().toString();
                 String password = editTextpassword.getText().toString();
                    // log_me_in(email, password);
-                logme_in();
+                //logme_in();
+                log_me_in(email, password);
             }
         });
     }
@@ -74,7 +75,7 @@ public class logIn extends Activity {
                                 //Reading the output in the string
                                 output = reader.readLine();
                                 Log.e("OUTPUT: ", output);
-                               if (!output.equals("validation successful")) {
+                               if (output.equals("validation successful")) {
                                     Intent intent = new Intent(logIn.this, onePerson.class);
                                     startActivity(intent);
                                 }

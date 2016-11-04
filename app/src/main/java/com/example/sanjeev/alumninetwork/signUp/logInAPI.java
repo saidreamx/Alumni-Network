@@ -12,7 +12,7 @@ import retrofit.http.POST;
 public interface logInAPI
 {
     @FormUrlEncoded
-    @POST("/login.php")
+    @POST("/logIn.php")
     public void logInUser
             (
                     @Field("email") String email,

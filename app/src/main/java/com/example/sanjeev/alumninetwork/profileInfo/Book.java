@@ -1,7 +1,7 @@
 package com.example.sanjeev.alumninetwork.profileInfo;
 
-public class Book {
-
+public class Book
+{
     //Variables that are in our json
     private int bookId;
     private String name;
