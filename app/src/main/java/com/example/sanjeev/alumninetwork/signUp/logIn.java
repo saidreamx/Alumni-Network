@@ -41,8 +41,8 @@ public class logIn extends Activity {
                 String email = editTextEmail.getText().toString();
                 String password = editTextpassword.getText().toString();
                    // log_me_in(email, password);
-                //logme_in();
-                log_me_in(email, password);
+                logme_in();
+                //log_me_in(email, password);
             }
         });
     }

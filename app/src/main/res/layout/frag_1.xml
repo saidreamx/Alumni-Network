@@ -31,7 +31,8 @@
             android:layout_height="wrap_content"
             android:text="SANJEEV"
             android:textStyle="bold"
-            android:textSize="17dp" />
+            android:textSize="17dp"
+            android:id="@+id/name"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -39,7 +40,8 @@
             android:layout_marginTop="4dp"
             android:text="Cluster Innovation Centre"
             android:gravity="center"
-            android:textColor="#FF707070"/>
+            android:textColor="#FF707070"
+            android:id="@+id/course"/>
 
         <TextView
             android:layout_width="wrap_content"

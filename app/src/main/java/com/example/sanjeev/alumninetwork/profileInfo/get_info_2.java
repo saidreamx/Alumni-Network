@@ -2,7 +2,6 @@ package com.example.sanjeev.alumninetwork.profileInfo;
 
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -67,6 +66,8 @@ public class get_info_2 extends AppCompatActivity  {
 
                 //Storing the data in our list
                 responseData = object_1;
+                Log.e("Response",responseData.toString());
+                Log.e("getting results", responseData.getAndroid().toString());
 
                 //Calling a method to show the list
                 showList();
