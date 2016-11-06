@@ -37,6 +37,7 @@ import retrofit.client.Response;
 
 public class aboutMe extends Fragment implements View.OnClickListener
 {
+    public static int SID = 0;
     ImageButton edit_cover;
     ImageView coverPhoto;
     String ImageDecode;
@@ -88,6 +89,7 @@ public class aboutMe extends Fragment implements View.OnClickListener
                     {
                         BufferedReader reader = null;
                         responseData = result;
+                        SID = responseData.getprofile().get(0).getsid();
                         Log.e("Response",responseData.toString());
                         Log.e("getting results", responseData.getprofile().get(0).getname());
                         showitems();

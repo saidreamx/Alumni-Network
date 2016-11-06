@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -18,6 +19,7 @@ import com.example.sanjeev.alumninetwork.POJO.projectAPI;
 import com.example.sanjeev.alumninetwork.POJO.wrapper_project_model;
 import com.example.sanjeev.alumninetwork.R;
 import com.example.sanjeev.alumninetwork.peopleList.customAdapter;
+import com.example.sanjeev.alumninetwork.signUp.collectionLoginSignup;
 
 import java.io.BufferedReader;
 
@@ -42,13 +44,21 @@ public class projectsDetails extends Fragment
         View view = inflater.inflate(R.layout.frag_2, container, false);
         lv=(ListView) view.findViewById(R.id.listView_projets);
         getdata();
+        ImageButton add = (ImageButton) view.findViewById(R.id.plus);
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v)
+            {
+                Intent intent = new Intent(getContext(), projectAdd.class);
+                startActivity(intent);
+            }
+        });
         return view;
     }
 
     void getdata() {
         SharedPreferences mango = getActivity().getSharedPreferences("mango", Activity.MODE_PRIVATE);
         String email = mango.getString("email_ID", "supio");
-
         String short_email = email;
         short_email = short_email.substring(0, 5);
         Log.e("short_email", short_email);

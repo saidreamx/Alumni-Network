@@ -14,6 +14,10 @@ public class profile_model {
         return s_f_name+ " " +s_l_name;
     }
 
+    public int getsid(){
+        return this.s_id;
+    }
+
     public void setFName(String name) {
         this.s_l_name = name;
     }

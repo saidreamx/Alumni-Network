@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#c5c8cc"
+    >
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="40dp"
+
+            >
+            <EditText
+                android:id="@+id/title_pro"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Project Title"
+                android:textColor="#143160"
+                android:inputType="textEmailAddress"
+                android:layout_marginLeft="50dp"
+                android:layout_marginRight="50dp"
+                />
+            <EditText
+                android:id="@+id/mentor"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Mentor"
+                android:textColor="#143160"
+                android:inputType="text"
+                android:layout_below="@+id/title_pro"
+                android:layout_alignLeft="@+id/title_pro"
+                android:layout_alignRight="@+id/title_pro" />
+            <EditText
+                android:id="@+id/duration"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Duration"
+                android:textColor="#143160"
+                android:inputType="text"
+                android:layout_below="@+id/mentor"
+                android:layout_alignLeft="@+id/mentor"
+                android:layout_alignRight="@+id/mentor"
+                />
+
+            <EditText
+                android:id="@+id/descp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Project Description"
+                android:textColor="#143160"
+                android:inputType="text"
+                android:layout_marginLeft="50dp"
+                android:layout_below="@+id/duration"
+                android:layout_marginRight="50dp"
+                />
+
+
+        </RelativeLayout>
+    <Button
+        android:id="@+id/add_pro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update Project"
+        android:layout_alignParentBottom="true"
+        android:background="#0f2b59" />
+</RelativeLayout>

@@ -24,6 +24,7 @@
         <activity android:name=".signUp.collectionLoginSignup" />
         <activity android:name=".peopleList.showAlumniList"/>
         <activity android:name=".signUp.mail_Developer"/>
+        <activity android:name=".profileInfo.projectAdd"/>
 
 
 

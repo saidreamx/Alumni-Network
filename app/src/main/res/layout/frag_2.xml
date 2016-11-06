@@ -6,7 +6,7 @@
     <ListView
         android:id="@+id/listView_projets"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:background="#c5c8cc"
         android:fadeScrollbars="true"
         android:animateLayoutChanges="true"
@@ -18,12 +18,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:maxWidth="100dp"
+        android:maxWidth="50dp"
         android:id="@+id/plus"
         android:scaleType="fitXY"
-        android:maxHeight="100dp"
+        android:maxHeight="50dp"
         android:src="@drawable/add_project"
         android:background="#0000"
         android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentRight="true"/>
 </RelativeLayout>
