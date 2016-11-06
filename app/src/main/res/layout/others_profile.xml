@@ -1,0 +1,78 @@
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#ffffff">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff">
+
+        <ImageView
+            android:id="@+id/header_imageview"
+            android:layout_width="match_parent"
+            android:src="@drawable/default_cover"
+            android:layout_height="150dp"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+
+            />
+
+        <LinearLayout
+            android:layout_marginTop="20dp"
+            android:id="@+id/informations_container"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_below="@+id/header_imageview"
+            android:gravity="center"
+            android:background="#054498"
+            android:paddingTop="32dp"
+            android:paddingBottom="32dp">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="SANJEEV"
+                android:textStyle="bold"
+                android:textSize="17dp"
+                android:id="@+id/name"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Cluster Innovation Centre"
+                android:gravity="center"
+                android:textColor="#FF707070"
+                android:id="@+id/course"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="New Delhi"
+                android:textColor="#FF909090" />
+
+        </LinearLayout>
+
+
+
+        <ImageView
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            android:src="@drawable/boydp"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/informations_container"
+            android:layout_marginBottom="-35dp" />
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/lv">
+        </ListView>
+
+
+    </RelativeLayout>
+</ScrollView>

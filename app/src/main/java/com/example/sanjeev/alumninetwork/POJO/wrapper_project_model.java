@@ -12,6 +12,6 @@ public class wrapper_project_model
     public List<projects_model> getprojects() {
         return result;
     }
-    public void setprofile(List<projects_model> projects) {
+    public void setprojects(List<projects_model> projects) {
         this.result = projects;}
 }

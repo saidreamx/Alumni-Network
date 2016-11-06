@@ -1,5 +1,6 @@
 package com.example.sanjeev.alumninetwork.peopleList;
 
+import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,68 +22,31 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-public class customAdapter extends BaseAdapter{
-    String [] title;
-    String [] mentor;
-    String [] descp;
-    Context context;
-    private static LayoutInflater inflater=null;
-    public customAdapter(aboutMe mainActivity, String[] title, String[] mentor, String [] descp) {
-        // TODO Auto-generated constructor stub
-        this.title = title;
-        this.mentor = mentor;
-        this.descp = descp;
-        context = mainActivity.getContext();
-        inflater = ( LayoutInflater )context.
-                getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+public class customAdapter extends ArrayAdapter<String>{
+
+    private final Activity context;
+    private final String[] web;
+    private final Integer[] imageId;
+    public customAdapter(Activity context,
+                      String[] web, Integer[] imageId) {
+        super(context, R.layout.alumni_list, web);
+        this.context = context;
+        this.web = web;
+        this.imageId = imageId;
+
     }
     @Override
-    public int getCount() {
-        // TODO Auto-generated method stub
-        return title.length;
-    }
+    public View getView(int position, View view, ViewGroup parent) {
+        LayoutInflater inflater = context.getLayoutInflater();
+        View rowView= inflater.inflate(R.layout.alumni_list, null, true);
+        TextView txtTitle = (TextView) rowView.findViewById(R.id.txt);
 
-    @Override
-    public Object getItem(int position) {
-        // TODO Auto-generated method stub
-        return position;
-    }
+        ImageView imageView = (ImageView) rowView.findViewById(R.id.img);
+        txtTitle.setText(web[position]);
 
-    @Override
-    public long getItemId(int position) {
-        // TODO Auto-generated method stub
-        return position;
-    }
-
-    public class Holder
-    {
-        TextView title;
-        TextView mentor;
-        TextView descp;
-    }
-    @Override
-    public View getView(final int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
-        Holder holder=new Holder();
-        View rowView;
-        rowView = inflater.inflate(R.layout.alumni_details_in_list, null);
-        holder.title=(TextView) rowView.findViewById(R.id.title);
-        holder.mentor=(TextView) rowView.findViewById(R.id.welcome);
-        holder.descp =(TextView) rowView.findViewById(R.id.descp);
-
-        //holder.img=(ImageView) rowView.findViewById(R.id.);
-        holder.title.setText(title[position]);
-        holder.mentor.setText(mentor[position]);
-        holder.descp.setText(descp[position]);
-//        holder.im.setImageResource(imageId[position]);
-        rowView.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO Auto-generated method stub
-                Toast.makeText(context, "You Clicked "+ title[position], Toast.LENGTH_LONG).show();
-            }
-        });
+        imageView.setImageResource(imageId[position]);
         return rowView;
     }
-
 }
+

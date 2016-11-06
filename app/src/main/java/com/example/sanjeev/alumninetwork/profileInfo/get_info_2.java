@@ -33,10 +33,10 @@ public class get_info_2 extends AppCompatActivity  {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.alumni_list);
+        //setContentView(R.layout.alumni_list);
 
         //Initializing the listview
-        listView = (ListView) findViewById(R.id.alumni_list);
+       // listView = (ListView) findViewById(R.id.alumni_list);
 
 
         //Calling the method that will fetch data
