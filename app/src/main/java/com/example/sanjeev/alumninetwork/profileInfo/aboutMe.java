@@ -35,6 +35,7 @@ import com.example.sanjeev.alumninetwork.signUp.collectionLoginSignup;
 
 
 import java.io.BufferedReader;
+import java.io.File;
 
 
 import retrofit.Callback;
@@ -45,6 +46,7 @@ import retrofit.client.Response;
 public class aboutMe extends Fragment implements View.OnClickListener
 {
     public static int SID = 0;
+    public  Bitmap bitmap;
     ImageButton edit_cover;
     ImageView coverPhoto;
     String ImageDecode;
@@ -102,9 +104,9 @@ public class aboutMe extends Fragment implements View.OnClickListener
                     {
                         BufferedReader reader = null;
                         responseData = result;
-                        SID = responseData.getprofile().get(0).getsid();
+                        SID = responseData.getprofile().get(0).getS_id();
                         Log.e("Response",responseData.toString());
-                        Log.e("getting results", responseData.getprofile().get(0).getname());
+                        Log.e("getting results", responseData.getprofile().get(0).getS_f_name());
                         showitems();
                     }
 
@@ -120,12 +122,42 @@ public class aboutMe extends Fragment implements View.OnClickListener
 
     void showitems()
     {
-        String name = responseData.getprofile().get(0).getname();
-        String course = responseData.getprofile().get(0).getcourse();
+        String name = responseData.getprofile().get(0).getS_f_name()+" "+responseData.getprofile().get(0).getS_l_name();
+        String course = responseData.getprofile().get(0).getS_course();
         name_tv.setText(name);
         course_tv.setText(course);
     }
 
+    public void showFileChooser()
+    {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, 1);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK
+                && null != data) {
+            Uri URI = data.getData();
+            String[] FILE = { MediaStore.Images.Media.DATA };
+            Cursor cursor = getActivity().getContentResolver().query(URI,
+                    FILE, null, null, null);
+
+            if (cursor != null) {
+                cursor.moveToFirst();
+                int columnIndex = cursor.getColumnIndex(FILE[0]);
+                String picturepath = cursor.getString(columnIndex);
+                File f = new File(picturepath);
+                String iname = f.getName();
+                cursor.close();
+                bitmap = BitmapFactory.decodeFile(picturepath);
+                coverPhoto.setImageBitmap(bitmap);
+            }else
+                Log.e("COJH", "CURSOR IS NULL");
+
+        }
+    }
 
 
 
@@ -133,7 +165,7 @@ public class aboutMe extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         if(v == edit_cover)
         {
-           mactivity.showFileChooser();
+           showFileChooser();
         }
         if(v == search_btn)
         {

@@ -8,6 +8,6 @@ import retrofit.http.Query;
 
 public interface make_others_profileAPI
 {
-    @GET("/getsearch_result.php")
-    void getUser(@Query("s_f_name") String s_f_name, @Query("s_l_name") String s_l_name, Callback<wrapper_profile_model> callback);
+    @GET("/get_profile_people.php")
+    void getUser(@Query("name") String name, Callback<wrapper_profile_model> callback);
 }

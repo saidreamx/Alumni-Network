@@ -81,7 +81,7 @@ public class projectsDetails extends Fragment
                         Log.e("Response", responseData.getprojects().toString());
                         size = responseData.getprojects().size();
                         Log.e("size of array", Integer.toString(size));
-                        Log.e("getting results", responseData.getprojects().get(1).gettitle());
+                        Log.e("getting results", responseData.getprojects().get(1).getPtitle());
                         showitems();
                     }
 
@@ -103,8 +103,8 @@ public class projectsDetails extends Fragment
                 /*title[i] = responseData.getprojects().get(i).gettitle();
                 mentor[i] = responseData.getprojects().get(i).getmentor();
                 descp[i] = responseData.getprojects().get(i).get_description();*/
-                title[i] = responseData.getprojects().get(i).gettitle()+"\n"+responseData.getprojects().get(i).getmentor()+"\n"
-                        +responseData.getprojects().get(i).get_description();
+                title[i] = responseData.getprojects().get(i).getPtitle()+"\n"+responseData.getprojects().get(i).getPmentor()+"\n"
+                        +responseData.getprojects().get(i).getPdescription();
             }
 
             //lv.setAdapter(new customAdapter(, title,mentor,descp));

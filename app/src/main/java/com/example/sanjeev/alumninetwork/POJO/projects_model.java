@@ -5,36 +5,46 @@ public class projects_model
     private String ptitle;
     private String pmentor;
     private String pdescription;
-    private String duration;
+    private String pduration;
+    private int sid;
 
-    //Getters and setters
-    public String getduration()
-    {
-        return duration;
-    }
-    public String gettitle() {
-        return ptitle;
+    public int getSid() {
+        return sid;
     }
 
-    public void settitle(String title) {
-        this.ptitle = title;
-    }
-
-
-    public String getmentor() {
-        return pmentor;
-    }
-
-    public void setmentor(String mentor) {
-        this.pmentor = mentor;
-    }
-
-    public String get_description() {
+    public String getPdescription() {
         return pdescription;
     }
 
-    public void set_description(String descp) {
-        this.pdescription = descp;
+    public String getPtitle() {
+        return ptitle;
     }
 
+    public String getPmentor() {
+        return pmentor;
+    }
+
+    public String getPduration() {
+        return pduration;
+    }
+
+    public void setPdescription(String pdescription) {
+        this.pdescription = pdescription;
+    }
+
+    public void setPduration(String pduration) {
+        this.pduration = pduration;
+    }
+
+    public void setPmentor(String pmentor) {
+        this.pmentor = pmentor;
+    }
+
+    public void setPtitle(String ptitle) {
+        this.ptitle = ptitle;
+    }
+
+    public void setSid(int sid) {
+        this.sid = sid;
+    }
 }

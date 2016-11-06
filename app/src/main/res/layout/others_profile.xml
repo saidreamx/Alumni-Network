@@ -1,12 +1,9 @@
-<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#ffffff">
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ffffff">
+    android:background="#ffffff"
+    >
 
         <ImageView
             android:id="@+id/header_imageview"
@@ -37,7 +34,7 @@
                 android:text="SANJEEV"
                 android:textStyle="bold"
                 android:textSize="17dp"
-                android:id="@+id/name"/>
+                android:id="@+id/name1"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -46,7 +43,7 @@
                 android:text="Cluster Innovation Centre"
                 android:gravity="center"
                 android:textColor="#FF707070"
-                android:id="@+id/course"/>
+                android:id="@+id/course1"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -67,12 +64,22 @@
             android:layout_above="@+id/informations_container"
             android:layout_marginBottom="-35dp" />
 
-        <ListView
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="5dp"
+        android:layout_below="@+id/informations_container"
+        >
+        <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/lv">
-        </ListView>
+            android:text="PROJECT"
+            android:textSize="20dp"
+            android:id="@+id/project_data"
+            android:textColor="#0B5AC4"
+            />
+
+    </ScrollView>
 
 
     </RelativeLayout>
-</ScrollView>

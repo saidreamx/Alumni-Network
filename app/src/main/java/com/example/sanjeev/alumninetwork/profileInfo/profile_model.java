@@ -10,30 +10,28 @@ public class profile_model {
     private String s_internship;
 
     //Getters and setters
-    public String getname() {
-        return s_f_name+ " " +s_l_name;
-    }
 
-    public int getsid(){
-        return this.s_id;
-    }
-
-    public void setFName(String name) {
-        this.s_l_name = name;
-    }
-    public void setLName(String name) {
-        this.s_f_name = name;
-    }
-
-    public String getcourse() {
+    public String getS_course() {
         return s_course;
+    }
+
+    public String getS_l_name() {
+        return s_l_name;
+    }
+
+    public String getS_f_name() {
+        return s_f_name;
+    }
+
+    public int getS_id() {
+        return s_id;
     }
 
     public void setcourse(String ver) {
         this.s_course = ver;
     }
 
-    public String get_internship() {
+    public String getS_internship() {
         return s_internship;
     }
 

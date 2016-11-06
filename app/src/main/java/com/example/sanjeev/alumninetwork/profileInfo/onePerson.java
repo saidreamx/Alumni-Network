@@ -30,7 +30,6 @@ public class onePerson extends AppCompatActivity {
     private Toolbar toolbar;
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    public static Bitmap bitmap;
 
     private int[] tabIcons = {
             R.drawable.pic1,
@@ -92,36 +91,7 @@ public class onePerson extends AppCompatActivity {
         return my_ap;
     }
 
-    public void showFileChooser()
-    {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, 1);
-    }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if (requestCode == 1 && resultCode == RESULT_OK
-                && null != data) {
-            Uri URI = data.getData();
-            String[] FILE = { MediaStore.Images.Media.DATA };
-            Cursor cursor = getContentResolver().query(URI,
-                    FILE, null, null, null);
-
-            if (cursor != null) {
-                cursor.moveToFirst();
-                int columnIndex = cursor.getColumnIndex(FILE[0]);
-                String picturepath = cursor.getString(columnIndex);
-                File f = new File(picturepath);
-                String iname = f.getName();
-                cursor.close();
-                bitmap = BitmapFactory.decodeFile(picturepath);
-                ppp.getBits(bitmap);
-            }else
-                Log.e("COJH", "CURSOR IS NULL");
-
-        }
-    }
 
 
 
