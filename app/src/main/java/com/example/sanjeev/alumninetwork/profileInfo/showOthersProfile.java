@@ -28,13 +28,21 @@ public class showOthersProfile extends AppCompatActivity
     int size;
     String [] array;
     wrapper_project_model responseData;
+    String name = "";
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.others_profile);
         Bundle bundle = getIntent().getExtras();
-        String name = bundle.getString("name");
-        Log.e("PANKAJJJJJJJJJJJJJJ",name);
+        if (bundle!=null && bundle.containsKey("name")) {
+            name = bundle.getString("name");
+            Log.e("PANKAJJJJJJJJJJJJJJ", name);
+        }
+        else
+        {
+            Log.e("dsds","sdsgydgsydfsydf");
+        }
         lv = (ListView)findViewById(R.id.lv);
         get_array_data(name);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.list_items,array);
@@ -45,10 +53,14 @@ public class showOthersProfile extends AppCompatActivity
 
     void get_array_data(String name)
     {
+        Log.e("SSJJJJJJ","IN THE GET ARRAY FUNCTION");
         RestAdapter adapter = new RestAdapter.Builder()
                 .setEndpoint(ROOT_URL) //Setting the Root URL
+                .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
+        Log.e("xxxxxxxxxx","REtrofit initialised");
         projectforothersAPI api = adapter.create(projectforothersAPI.class);
+        Log.e("yyyyyyyyyyy","api created");
         api.insertUser(
                 //Passing the values by getting it from editTexts
                 name,
@@ -56,6 +68,8 @@ public class showOthersProfile extends AppCompatActivity
                 new Callback<wrapper_project_model>() {
                     @Override
                     public void success(wrapper_project_model result, Response response) {
+                        Log.e("dfdf","ASDDDDDD");
+                        Log.e("in the success",result.toString());
                         responseData = result;
                         Log.e("Response", responseData.getprojects().toString());
                         size = responseData.getprojects().size();

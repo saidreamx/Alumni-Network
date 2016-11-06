@@ -5,8 +5,13 @@ public class projects_model
     private String ptitle;
     private String pmentor;
     private String pdescription;
+    private String duration;
 
     //Getters and setters
+    public String getduration()
+    {
+        return duration;
+    }
     public String gettitle() {
         return ptitle;
     }

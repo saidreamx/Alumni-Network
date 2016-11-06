@@ -183,7 +183,7 @@ public class aboutMe extends Fragment implements View.OnClickListener
         database.name_list = new String[size2];
         for(int i=0;i<size2;i++)
         {
-            database.name_list[i] = responsedata2.getpeople().get(i).gets_f_name() + " " +
+            database.name_list[i] = responsedata2.getpeople().get(i).gets_f_name() +
                     responsedata2.getpeople().get(i).gets_l_name();
         }
         database.image_list = new Integer[size2];
