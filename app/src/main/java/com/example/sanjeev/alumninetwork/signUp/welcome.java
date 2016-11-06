@@ -24,6 +24,7 @@ public class welcome extends Fragment
             {
                 Intent intent = new Intent(getActivity(), logIn.class);
                 startActivity(intent);
+                getActivity().getSupportFragmentManager().popBackStack();
             }
         });
         return view;

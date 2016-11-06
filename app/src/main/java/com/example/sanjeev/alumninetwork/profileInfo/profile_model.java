@@ -11,7 +11,7 @@ public class profile_model {
 
     //Getters and setters
     public String getname() {
-        return s_f_name+" " +s_l_name;
+        return s_f_name+ " " +s_l_name;
     }
 
     public void setFName(String name) {

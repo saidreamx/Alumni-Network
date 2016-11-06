@@ -11,5 +11,5 @@ import retrofit.http.Query;
 public interface profileAPI {
 
     @GET("/get_my_data.php")
-    void insertUser(@Query("s_l_name") String email, Callback<wrapper_profile_model> callback);
+    void insertUser(@Query("email") String email, Callback<wrapper_profile_model> callback);
 }

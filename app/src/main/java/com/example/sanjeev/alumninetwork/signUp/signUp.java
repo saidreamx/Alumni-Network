@@ -1,4 +1,5 @@
 package com.example.sanjeev.alumninetwork.signUp;
+import android.app.Activity;
 import android.content.Intent;
 
 import android.content.SharedPreferences;
@@ -83,7 +84,7 @@ public class signUp extends Fragment
         Random r = new Random( System.currentTimeMillis() );
         return 10000 + r.nextInt(20000);
     }
-    private void insertUser(String email, String password)
+    private void insertUser(final String email, String password)
     {
         final String emailID;
         emailID = email;
@@ -120,13 +121,30 @@ public class signUp extends Fragment
                             //Reading the output in the string
                             output = reader.readLine();
                             Log.e("OUPUT LINE", output);
-                            if(!output.equals("444"))
+                            if(output.equals("successfully registered"))
                             {
                                 sendMail sm = new sendMail(getContext(), emailID, subject, messagecontent);
                                 //Executing sendmail to send email
                                 sm.execute();
                                 Toast.makeText(getContext(), "Verification code sent to Email", Toast.LENGTH_SHORT).show();
+                                SharedPreferences mango = getActivity().getSharedPreferences("mango", Activity.MODE_PRIVATE);
+                                SharedPreferences.Editor my_editor = mango.edit();
+                                my_editor.putString("email_ID",email);
+                                my_editor.putBoolean("check", true);
+                                my_editor.apply();
                                 collectionLoginSignup.viewPager.setCurrentItem(collectionLoginSignup.viewPager.getCurrentItem()+1);
+                                getActivity().getSupportFragmentManager().popBackStack();
+                            }
+                            else
+                            {
+                                if(output.equals("username or email already exist"))
+                                {
+                                    Toast.makeText(getContext(), "This email ID already exists",Toast.LENGTH_SHORT).show();
+                                }
+                                else
+                                {
+                                    Toast.makeText(getContext(), "Error: Try Again", Toast.LENGTH_SHORT).show();
+                                }
                             }
                         } catch (IOException e) {
                             e.printStackTrace();

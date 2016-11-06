@@ -2,6 +2,7 @@ package com.example.sanjeev.alumninetwork.signUp;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -41,8 +42,8 @@ public class logIn extends Activity {
                 String email = editTextEmail.getText().toString();
                 String password = editTextpassword.getText().toString();
                    // log_me_in(email, password);
-                logme_in();
-                //log_me_in(email, password);
+                //logme_in();
+                log_me_in(email, password);
             }
         });
     }
@@ -76,8 +77,13 @@ public class logIn extends Activity {
                                 output = reader.readLine();
                                 Log.e("OUTPUT: ", output);
                                if (output.equals("validation successful")) {
+                                   SharedPreferences mango = getSharedPreferences("mango", Activity.MODE_PRIVATE);
+                                   SharedPreferences.Editor my_editor = mango.edit();
+                                   my_editor.putBoolean("loggedin", true);
+                                   my_editor.apply();
                                     Intent intent = new Intent(logIn.this, onePerson.class);
                                     startActivity(intent);
+                                   finish();
                                 }
                                 else
                                 {

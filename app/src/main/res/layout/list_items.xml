@@ -1,6 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <TextView
     android:layout_height="match_parent"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:id="@+id/tv1"
+    android:text="DDDDDDDDDDDDDDDDDDDD"
+    android:textSize="20dp"
+    android:layout_marginLeft="10dp"
+    android:layout_marginRight="10dp"
+    android:textStyle="bold"
+    android:textColor="#0f2b59"
+    android:background="#ffffff"
     xmlns:android="http://schemas.android.com/apk/res/android" />

@@ -25,14 +25,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.sanjeev.alumninetwork.R;
-import com.example.sanjeev.alumninetwork.signUp.collectionLoginSignup;
-import com.example.sanjeev.alumninetwork.signUp.registerAPI;
-import com.example.sanjeev.alumninetwork.signUp.sendMail;
+
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
+
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -64,13 +60,17 @@ public class aboutMe extends Fragment implements View.OnClickListener
         name_tv = (TextView) view.findViewById(R.id.name);
         course_tv = (TextView)view.findViewById(R.id.course);
         edit_cover.setOnClickListener(this);
-        getdata();
+        SharedPreferences mango = getActivity().getSharedPreferences("mango", getActivity().MODE_PRIVATE);
+        String email = mango.getString("email_ID","supiou");
+        getdata(email);
         return view;
     }
 
-    void getdata()
+    void getdata(String email)
     {
-        String s_l_name = "Dubey";
+        String short_email = email;
+        short_email = short_email.substring(0,5);
+        Log.e("short_email", short_email);
         RestAdapter adapter = new RestAdapter.Builder()
                 .setEndpoint(ROOT_URL) //Setting the Root URL
                 .setLogLevel(RestAdapter.LogLevel.FULL)
@@ -80,11 +80,12 @@ public class aboutMe extends Fragment implements View.OnClickListener
         profileAPI api = adapter.create(profileAPI.class);
         api.insertUser(
                 //Passing the values by getting it from editTexts
-                s_l_name,
+                short_email,
                 //Creating an anonymous callback
                 new Callback<wrapper_profile_model>() {
                     @Override
-                    public void success(wrapper_profile_model result, Response response) {
+                    public void success(wrapper_profile_model result, Response response)
+                    {
                         BufferedReader reader = null;
                         responseData = result;
                         Log.e("Response",responseData.toString());

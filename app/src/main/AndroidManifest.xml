@@ -11,7 +11,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
 
-        <activity android:name=".signUp.collectionLoginSignup">
+        <activity android:name=".splashScreen">
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -20,6 +21,7 @@
         <activity android:name=".profileInfo.onePerson"
             android:theme = "@style/MyMaterialTheme.Base"/>
         <activity android:name=".signUp.logIn"/>
+        <activity android:name=".signUp.collectionLoginSignup" />
         <activity android:name=".peopleList.showAlumniList"/>
         <activity android:name=".signUp.mail_Developer"/>
 
