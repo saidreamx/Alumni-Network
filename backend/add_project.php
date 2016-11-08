@@ -4,10 +4,10 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
  
  //Getting post data 
  
- $title = $_POST['email'];
- $mentor = $_POST['password'];
- $duration = $_POST['duration'];
- $description = $_POST['description'];
+ $title = $_POST['ptitle'];
+ $mentor = $_POST['pmentor'];
+ $duration = $_POST['pduration'];
+ $description = $_POST['pdescription'];
  $sid = $_POST['sid'];
 
  
@@ -38,9 +38,10 @@ if($_SERVER['REQUEST_METHOD']=='POST'){
  //In case any error occured 
  echo 'oops! Please try again!';
  }
- 
+ }
  //Closing the database connection 
  mysqli_close($con);
+}
  
 else{
 echo 'error';

@@ -1,0 +1,34 @@
+Android Studio: Android Studio is the official Integrated Development Environment (IDE) for Android application development, based on IntelliJ IDEA. Along with all amazing features of IntelliJ editor, Android studio helps in following ways:
+
+The project management tool inside Anroid Studio is Gradle Build system. It is very flexible and easy for developer to cope with.
+A fast and feature-rich emulator  has been provided for testing purposes.
+A unified environment where you can develop for all Android devices
+Instant Run to push changes to your running app without building a new APK
+For version control Android studio has GitHub integration to help you build common app features and import sample code
+Extensive testing tools and frameworks
+Lint tools to catch performance, usability, version compatibility, and other problems
+C++ and NDK support
+Support for building Android Wear apps
+Built-in support for Google Cloud Platform, making it easy to integrate Google Cloud Messaging and App Engine
+
+Serverspace: We have hosted our Application on hostinger.in. All the php scripts are put o it. Through our Application we make a request to this server and geta json as result.
+
+Retrofit: Retrofit is a Type-safe HTTP client for Android and Java. It has been developed by Square community and put under open source. Retrofit is an awesome library which enables the developer to make http requests on server without writing lots of lengthy code. 
+Retrofit can be added into project by simply adding into dependencies:
+
+compile 'com.squareup.retrofit2:retrofit:2.1.0'
+
+We have used retrofit to communicate with server.
+
+
+IMplementation:
+
+Getting host for app:
+To start with development We registered for a free hosting site, wwww.hostinger.in. It has phpmyadmin, SQL and various other useful support.  The communication is based on FTP.
+
+DAtabase creation:
+We first created database with all our tables using various mysql commands including create, insert into, modify , alter etc. We have inserted dummy data into the tables which will be updated later. Since it is only development period and data we have is not sensitive, we have put chmod to 777. 
+ 
+ Application development:
+ We have developed our application in android studio for minimum sdk 19. We have used certain open source libraries like retrofit to have a clean code.
+ All the development has been done in JAVA programing language. The layouts have been defined in .xml format.

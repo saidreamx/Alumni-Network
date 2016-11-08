@@ -11,9 +11,7 @@ import android.widget.Button;
 
 import com.example.sanjeev.alumninetwork.R;
 
-/**
- * Created by sanjeev on 31/10/16.
- */
+
 public class verifyMe extends Fragment
 {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState)
@@ -40,4 +38,8 @@ public class verifyMe extends Fragment
         });
         return view;
     }
+
+
+
+
 }

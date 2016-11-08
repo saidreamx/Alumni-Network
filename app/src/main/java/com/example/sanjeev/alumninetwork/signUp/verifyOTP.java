@@ -17,6 +17,7 @@ import com.example.sanjeev.alumninetwork.R;
 public class verifyOTP extends Fragment
 {
     Button submit;
+    Button not_me;
     EditText OTP;
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
@@ -24,6 +25,18 @@ public class verifyOTP extends Fragment
         View view1 = inflater.inflate(R.layout.register2, container, false);
         submit = (Button) view1.findViewById(R.id.verify);
         OTP = (EditText) view1.findViewById(R.id.cnfm_otp);
+        not_me = (Button) view1.findViewById(R.id.not_me_button);
+
+
+        not_me.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), mail_Developer.class);
+                startActivity(intent);
+            }
+        });
+
+
 
         submit.setOnClickListener(new View.OnClickListener() {
             @Override

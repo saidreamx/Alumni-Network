@@ -2,18 +2,25 @@ package com.example.sanjeev.alumninetwork.profileInfo;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
+import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -32,11 +39,28 @@ import com.example.sanjeev.alumninetwork.peopleList.customAdapter;
 import com.example.sanjeev.alumninetwork.peopleList.database;
 import com.example.sanjeev.alumninetwork.peopleList.showAlumniList;
 import com.example.sanjeev.alumninetwork.signUp.collectionLoginSignup;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
+
+import javax.net.ssl.HttpsURLConnection;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -45,17 +69,18 @@ import retrofit.client.Response;
 
 public class aboutMe extends Fragment implements View.OnClickListener
 {
+    public static final String UPLOAD_URL = "http://getsanjeev.esy.es/upload.php";
+    public static final String UPLOAD_KEY = "image";
     public static int SID = 0;
-    public  Bitmap bitmap;
     ImageButton edit_cover;
-    ImageView coverPhoto;
+    Bitmap bitmap;
     String ImageDecode;
     int PICK_IMAGE_REQUEST = 1;
     int IMG_RESULT = 1;
     int size2;
     onePerson mactivity;
   //  private Bitmap bitmap;
-    public static Context my_context;
+    public Context my_context;
     public static final String ROOT_URL = "http://getsanjeev.esy.es/";
     wrapper_profile_model responseData;
     wrapper_people_model responsedata2;
@@ -63,6 +88,7 @@ public class aboutMe extends Fragment implements View.OnClickListener
     TextView course_tv;
     EditText search;
     Button search_btn;
+    CircularImageView my_photo;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState)
@@ -71,6 +97,10 @@ public class aboutMe extends Fragment implements View.OnClickListener
         Log.e("IN oncreateview", "BBBB");
         edit_cover = (ImageButton) view.findViewById(R.id.button_choose);
         name_tv = (TextView) view.findViewById(R.id.name);
+        my_photo = (CircularImageView)view.findViewById(R.id.profile_photo);
+        my_photo.setBorderColor(getResources().getColor(R.color.profile_border));
+        my_photo.setBorderWidth(20);
+        my_photo.setShadowColor(getResources().getColor(R.color.profile_border));
         course_tv = (TextView)view.findViewById(R.id.course);
         search  = (EditText) view.findViewById(R.id.search);
         search_btn = (Button) view.findViewById(R.id.search_btn);
@@ -128,37 +158,49 @@ public class aboutMe extends Fragment implements View.OnClickListener
         course_tv.setText(course);
     }
 
-    public void showFileChooser()
-    {
-        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-        startActivityForResult(intent, 1);
+    private void showFileChooser() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(getPickImageChooserIntent(), PICK_IMAGE_REQUEST);
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data)
-    {
-        if (requestCode == 1 && resultCode == Activity.RESULT_OK
-                && null != data) {
-            Uri URI = data.getData();
-            String[] FILE = { MediaStore.Images.Media.DATA };
-            Cursor cursor = getActivity().getContentResolver().query(URI,
-                    FILE, null, null, null);
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-            if (cursor != null) {
-                cursor.moveToFirst();
-                int columnIndex = cursor.getColumnIndex(FILE[0]);
-                String picturepath = cursor.getString(columnIndex);
-                File f = new File(picturepath);
-                String iname = f.getName();
-                cursor.close();
-                bitmap = BitmapFactory.decodeFile(picturepath);
-                coverPhoto.setImageBitmap(bitmap);
-            }else
-                Log.e("COJH", "CURSOR IS NULL");
-
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+            Uri imageUri = getPickImageResultUri(data);
+            File file = new File(getRealPathFromURI(imageUri));
+            bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
+            Log.e("Test_Bitmap", "Absolute Path " + file.getAbsolutePath() + "  real path " + getRealPathFromURI(imageUri));
+            my_photo.setImageBitmap(bitmap);
+            uploadImage();
         }
     }
 
+    private String getRealPathFromURI(Uri contentURI) {
+        String result;
+        Cursor cursor = getActivity().getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) {
+            result = contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            result = cursor.getString(idx);
+            cursor.close();
+        }
+        return result;
+    }
+
+    public Uri getPickImageResultUri(Intent  data) {
+        boolean isCamera = true;
+        if (data != null && data.getData() != null) {
+            String action = data.getAction();
+            isCamera = action != null  && action.equals(MediaStore.ACTION_IMAGE_CAPTURE);
+        }
+        return data.getData();
+    }
 
 
     @Override
@@ -166,6 +208,7 @@ public class aboutMe extends Fragment implements View.OnClickListener
         if(v == edit_cover)
         {
            showFileChooser();
+            //uploadImage();
         }
         if(v == search_btn)
         {
@@ -176,6 +219,11 @@ public class aboutMe extends Fragment implements View.OnClickListener
             search_person(firstName,lastName);
         }
     }
+
+
+
+
+
 
     void search_person(String s_f_name, String s_l_name)
     {
@@ -209,6 +257,48 @@ public class aboutMe extends Fragment implements View.OnClickListener
                 }
         );
     }
+    public Intent getPickImageChooserIntent() {
+
+// Determine Uri of camera image to  save.
+
+
+        List<Intent> allIntents = new ArrayList<>();
+        PackageManager packageManager =  getActivity().getPackageManager();
+
+// collect all camera intents
+
+// collect all gallery intents
+        Intent galleryIntent = new  Intent(Intent.ACTION_GET_CONTENT);
+        galleryIntent.setType("image/*");
+        List<ResolveInfo> listGallery =  packageManager.queryIntentActivities(galleryIntent, 0);
+        for (ResolveInfo res : listGallery) {
+            Intent intent = new  Intent(galleryIntent);
+            intent.setComponent(new ComponentName(res.activityInfo.packageName, res.activityInfo.name));
+            intent.setPackage(res.activityInfo.packageName);
+            allIntents.add(intent);
+        }
+
+// the main intent is the last in the  list (fucking android) so pickup the useless one
+        Intent mainIntent =  allIntents.get(allIntents.size() - 1);
+        for (Intent intent : allIntents) {
+            if  (intent.getComponent().getClassName().equals("com.android.documentsui.DocumentsActivity"))  {
+                mainIntent = intent;
+                break;
+            }
+        }
+        allIntents.remove(mainIntent);
+
+// Create a chooser from the main  intent
+        Intent chooserIntent =  Intent.createChooser(mainIntent, "Select source");
+
+// Add all other intents
+        chooserIntent.putExtra(Intent.EXTRA_INITIAL_INTENTS,  allIntents.toArray(new Parcelable[allIntents.size()]));
+
+        return chooserIntent;
+    }
+
+
+
 
     void show_alumni_list()
     {
@@ -232,7 +322,50 @@ public class aboutMe extends Fragment implements View.OnClickListener
         mactivity = (onePerson) getActivity();
     }
 
-    public void getBits(Bitmap bitmap) {
-        coverPhoto.setImageBitmap(bitmap);
+    public String getStringImage(Bitmap bmp){
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] imageBytes = baos.toByteArray();
+        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
+        return encodedImage;
     }
+
+    private void uploadImage(){
+        class UploadImage extends AsyncTask<Bitmap,Void,String> {
+
+            ProgressDialog loading;
+            request_handler rh = new request_handler();
+
+            @Override
+            protected void onPreExecute() {
+                super.onPreExecute();
+                loading = ProgressDialog.show(getActivity(), "Uploading...", null,true,true);
+            }
+
+            @Override
+            protected void onPostExecute(String s) {
+                super.onPostExecute(s);
+                loading.dismiss();
+                Toast.makeText(getActivity(),s,Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            protected String doInBackground(Bitmap... params) {
+                Bitmap bitmap = params[0];
+                String uploadImage = getStringImage(bitmap);
+
+                HashMap<String,String> data = new HashMap<>();
+
+                data.put(UPLOAD_KEY, uploadImage);
+                String result = rh.sendPostRequest(UPLOAD_URL,data);
+
+                return result;
+            }
+        }
+
+        UploadImage ui = new UploadImage();
+        ui.execute(bitmap);
+    }
+
+
 }

@@ -38,6 +38,12 @@
             android:text="Verify"
             android:id="@+id/verify"
             />
+        <Button
+            android:id="@+id/not_me_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="This is not me! Help"
+            android:background="#c5c8cc" />
     </LinearLayout>
 
 

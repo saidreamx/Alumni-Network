@@ -34,7 +34,6 @@ public class customAdapter extends ArrayAdapter<String>{
         this.context = context;
         this.web = web;
         this.imageId = imageId;
-
     }
     @Override
     public View getView(int position, View view, ViewGroup parent) {
@@ -49,4 +48,3 @@ public class customAdapter extends ArrayAdapter<String>{
         return rowView;
     }
 }
-

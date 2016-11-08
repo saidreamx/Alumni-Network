@@ -31,4 +31,5 @@ dependencies {
     compile files('libs/activation.jar')
     compile files('libs/additionnal.jar')
     compile files('libs/mail.jar')
+    compile 'com.mikhaellopez:circularimageview:3.0.2'
 }
