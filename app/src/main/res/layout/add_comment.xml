@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="This doesnot work!"
+            android:textColor="#0f2b59"
+            android:paddingLeft="10dp"
+            android:textSize="20dp"/>
+        <EditText
+            android:id="@+id/title_pro"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Add Comment"
+            android:textColor="#143160"
+            android:inputType="textEmailAddress"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            />
+        <EditText
+            android:id="@+id/mentor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Add location"
+            android:textColor="#143160"
+            android:inputType="text"
+            android:layout_below="@+id/title_pro"
+            android:layout_alignLeft="@+id/title_pro"
+            android:layout_alignRight="@+id/title_pro" />
+
+
+    </RelativeLayout>
+    <Button
+        android:id="@+id/add_pro"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Update Project"
+        android:layout_alignParentBottom="true"
+        android:background="#0f2b59" />
+</RelativeLayout>

@@ -24,7 +24,7 @@ public class postsByPerson extends Fragment
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(getContext(), projectAdd.class);
+                Intent intent = new Intent(getContext(), postsByPerson.class);
                 startActivity(intent);
             }
         });

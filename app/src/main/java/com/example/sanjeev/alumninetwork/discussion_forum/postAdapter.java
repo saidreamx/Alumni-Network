@@ -21,9 +21,9 @@ public class postAdapter  extends BaseAdapter {
     TextView time;
     TextView post;
     CircularImageView profile_pic;
-    CircularImageView like;
+    ImageView like;
     CircularImageView unlike;
-    CircularImageView comment;
+    ImageView comment;
     TextView comment_1;
     TextView comment_2;
     Button load_more;
@@ -40,12 +40,9 @@ public class postAdapter  extends BaseAdapter {
         time = (TextView)rowView.findViewById(R.id.time);
         post = (TextView)rowView.findViewById(R.id.post);
         profile_pic = (CircularImageView)rowView.findViewById(R.id.profile_pic);
-        like = (CircularImageView)rowView.findViewById(R.id.upvote_btn);
-        unlike = (CircularImageView)rowView.findViewById(R.id.downvote_btn);
-        comment = (CircularImageView)rowView.findViewById(R.id.comment_btn);
-        comment_1 = (TextView)rowView.findViewById(R.id.comment_1);
-        comment_2 = (TextView)rowView.findViewById(R.id.comment_2);
-        load_more = (Button) rowView.findViewById(R.id.more_comments);
+        like = (ImageView)rowView.findViewById(R.id.like_btn);
+
+        comment = (ImageView)rowView.findViewById(R.id.comment_btn);
 
         return rowView;
     }
