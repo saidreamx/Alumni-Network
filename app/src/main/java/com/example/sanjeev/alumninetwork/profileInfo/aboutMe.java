@@ -41,6 +41,7 @@ import com.example.sanjeev.alumninetwork.peopleList.database;
 import com.example.sanjeev.alumninetwork.peopleList.showAlumniList;
 import com.example.sanjeev.alumninetwork.signUp.collectionLoginSignup;
 import com.mikhaellopez.circularimageview.CircularImageView;
+import com.squareup.picasso.Picasso;
 
 
 import java.io.BufferedReader;
@@ -82,10 +83,11 @@ public class aboutMe extends Fragment implements View.OnClickListener {
     onePerson mactivity;
     //  private Bitmap bitmap;
     public Context my_context;
-    public static final String ROOT_URL = "http://getsanjeev.esy.es/";
+    public static final String ROOT_URL = "http://getsanjeev.esy.es";
     wrapper_profile_model responseData;
     wrapper_people_model responsedata2;
     ImageSendData responsedata3;
+    Response responsedata4;
     TextView name_tv;
     TextView course_tv;
     EditText search;
@@ -111,6 +113,8 @@ public class aboutMe extends Fragment implements View.OnClickListener {
         SharedPreferences mango = getActivity().getSharedPreferences("mango", getActivity().MODE_PRIVATE);
         String email = mango.getString("email_ID", "supiou");
         getdata(email);
+        Log.e("GOING into retrieve","FUNCTION");
+
         return view;
     }
 
@@ -138,6 +142,7 @@ public class aboutMe extends Fragment implements View.OnClickListener {
                         Log.e("Response", responseData.toString());
                         Log.e("getting results", responseData.getprofile().get(0).getS_f_name());
                         showitems();
+                        retrieve_image();
                     }
 
                     @Override
@@ -319,41 +324,48 @@ public class aboutMe extends Fragment implements View.OnClickListener {
         return encodedImage;
     }
 
-    private void uploadImage() {
-        class UploadImage extends AsyncTask<Bitmap, Void, String> {
+    void retrieve_image()
+    {
+        int s_id = aboutMe.SID;
+        Log.e("MY SID", Integer.toString(s_id));
+        RestAdapter adapter = new RestAdapter.Builder()
+                .setEndpoint(ROOT_URL) //Setting the Root URL
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .build();
+        photoAPI api = adapter.create(photoAPI.class);
+        api.getphoto(
+                //Passing the values by getting it from editTexts
+                s_id,
+                //Creating an anonymous callback
+                new Callback<Response>() {
+                    @Override
+                    public void success(Response result, Response response) {
+                        BufferedReader reader = null;
+                        responsedata4 = result;
+                        String output = "";
+                        try
+                        {
+                            reader = new BufferedReader(new InputStreamReader(result.getBody().in()));
+                            //Reading the output in the string
+                            output = reader.readLine();
+                        }
+                        catch (IOException e)
+                        {
+                            Log.e("EXCEPTION", e.toString());
+                        }
+                        Log.e("getimage function", output);
+                        String image_source = ROOT_URL+"/uploads/"+output;
+                        Log.e("IMAGE URL",image_source);
+                        Picasso.with(getContext()).load(image_source).into(my_photo);
+                    }
 
-            ProgressDialog loading;
-            request_handler rh = new request_handler();
-
-            @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-                loading = ProgressDialog.show(getActivity(), "Uploading...", null, true, true);
-            }
-
-            @Override
-            protected void onPostExecute(String s) {
-                super.onPostExecute(s);
-                loading.dismiss();
-                Toast.makeText(getActivity(), s, Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            protected String doInBackground(Bitmap... params) {
-                Bitmap bitmap = params[0];
-                String uploadImage = getStringImage(bitmap);
-
-                HashMap<String, String> data = new HashMap<>();
-
-                data.put(UPLOAD_KEY, uploadImage);
-                String result = rh.sendPostRequest(UPLOAD_URL, data);
-
-                return result;
-            }
-        }
-
-        UploadImage ui = new UploadImage();
-        ui.execute(bitmap);
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Toast.makeText(getContext(), error.toString(), Toast.LENGTH_LONG).show();
+                        Log.e("SIXTH", error.toString());
+                    }
+                }
+        );
     }
 
 
