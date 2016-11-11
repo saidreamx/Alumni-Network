@@ -16,8 +16,12 @@ import com.example.sanjeev.alumninetwork.POJO.projectforothersAPI;
 import com.example.sanjeev.alumninetwork.POJO.wrapper_people_model;
 import com.example.sanjeev.alumninetwork.POJO.wrapper_project_model;
 import com.example.sanjeev.alumninetwork.R;
+import com.mikhaellopez.circularimageview.CircularImageView;
+import com.squareup.picasso.Picasso;
 
 import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 import retrofit.Callback;
 import retrofit.RestAdapter;
@@ -31,6 +35,8 @@ public class showOthersProfile extends AppCompatActivity {
     TextView name_tv;
     TextView course_tv;
     String text;
+    public  int SID;
+    CircularImageView pro_photo;
     int size;
     int size2;
     String[] array;
@@ -46,6 +52,10 @@ public class showOthersProfile extends AppCompatActivity {
         tv = (TextView) findViewById(R.id.project_data);
         name_tv = (TextView) findViewById(R.id.name1);
         course_tv = (TextView) findViewById((R.id.course1));
+        pro_photo = (CircularImageView) findViewById(R.id.profile_pic1);
+        pro_photo.setBorderColor(getResources().getColor(R.color.profile_border));
+        pro_photo.setBorderWidth(20);
+        pro_photo.setShadowColor(getResources().getColor(R.color.profile_border));
         if (bundle != null && bundle.containsKey("name")) {
             name = bundle.getString("name");
             Log.e("NAMEIS", name);
@@ -54,6 +64,50 @@ public class showOthersProfile extends AppCompatActivity {
         }
         get_profile_info(name);
     }
+
+    void retrieve_image()
+    {
+        int s_id = SID;
+        Log.e("MY SID", Integer.toString(s_id));
+        RestAdapter adapter = new RestAdapter.Builder()
+                .setEndpoint(ROOT_URL) //Setting the Root URL
+                .setLogLevel(RestAdapter.LogLevel.FULL)
+                .build();
+        photoAPI api = adapter.create(photoAPI.class);
+        api.getphoto(
+                //Passing the values by getting it from editTexts
+                s_id,
+                //Creating an anonymous callback
+                new Callback<Response>() {
+                    @Override
+                    public void success(Response result, Response response) {
+                        BufferedReader reader = null;
+                        String output = "";
+                        try
+                        {
+                            reader = new BufferedReader(new InputStreamReader(result.getBody().in()));
+                            //Reading the output in the string
+                            output = reader.readLine();
+                        }
+                        catch (IOException e)
+                        {
+                            Log.e("EXCEPTION", e.toString());
+                        }
+                        Log.e("getimage function", output);
+                        String image_source = ROOT_URL+"/uploads/"+output;
+                        Log.e("IMAGE URL",image_source);
+                        Picasso.with(getApplicationContext()).load(image_source).into(pro_photo);
+                    }
+
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
+                        Log.e("SIXTH", error.toString());
+                    }
+                }
+        );
+    }
+
 
 
     void get_profile_info(final String name) {
@@ -72,8 +126,10 @@ public class showOthersProfile extends AppCompatActivity {
                         Log.e("in the success", result.toString());
                         responsedata2 = result;
                         size2 = responsedata2.getprofile().size();
+                        SID = responsedata2.getprofile().get(0).getS_id();
                         Log.e("getting results human", responsedata2.getprofile().get(0).getS_f_name());
                         get_array_data(name);
+                        retrieve_image();
                     }
 
                     @Override

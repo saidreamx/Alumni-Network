@@ -75,6 +75,7 @@ public class aboutMe extends Fragment implements View.OnClickListener {
     public static final String UPLOAD_KEY = "image";
     public static int SID = 0;
     ImageButton edit_cover;
+    int flag_first_time = 0;
     Bitmap bitmap;
     String ImageDecode;
     int PICK_IMAGE_REQUEST = 1;
@@ -110,11 +111,10 @@ public class aboutMe extends Fragment implements View.OnClickListener {
         search_btn = (Button) view.findViewById(R.id.search_btn);
         edit_cover.setOnClickListener(this);
         search_btn.setOnClickListener(this);
-        SharedPreferences mango = getActivity().getSharedPreferences("mango", getActivity().MODE_PRIVATE);
+        SharedPreferences mango = getActivity().getSharedPreferences("mango", Activity.MODE_PRIVATE);
         String email = mango.getString("email_ID", "supiou");
         getdata(email);
         Log.e("GOING into retrieve","FUNCTION");
-
         return view;
     }
 
@@ -142,7 +142,8 @@ public class aboutMe extends Fragment implements View.OnClickListener {
                         Log.e("Response", responseData.toString());
                         Log.e("getting results", responseData.getprofile().get(0).getS_f_name());
                         showitems();
-                        retrieve_image();
+                        SharedPreferences sp =getActivity().getSharedPreferences("mango", Activity.MODE_PRIVATE);
+                        if (sp.contains("uploaded")) retrieve_image();
                     }
 
                     @Override
@@ -389,6 +390,11 @@ public class aboutMe extends Fragment implements View.OnClickListener {
                 Response myresonse = result;
                 Log.e("iN SENDING IMAGE", result.toString());
                 Log.e("Upload", "success");
+                flag_first_time = 1;
+                SharedPreferences sp =getActivity().getSharedPreferences("mango", Activity.MODE_PRIVATE);
+                SharedPreferences.Editor my_editor = sp.edit();
+                my_editor.putBoolean("uploaded", true);
+                my_editor.apply();
             }
 
             @Override
@@ -396,7 +402,6 @@ public class aboutMe extends Fragment implements View.OnClickListener {
                 Log.e("Upload", error.toString());
             }
         });
-
 }
 
 

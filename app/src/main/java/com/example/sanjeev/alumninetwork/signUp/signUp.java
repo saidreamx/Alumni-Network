@@ -84,6 +84,9 @@ public class signUp extends Fragment
         Random r = new Random( System.currentTimeMillis() );
         return 10000 + r.nextInt(20000);
     }
+
+
+
     private void insertUser(final String email, String password)
     {
         final String emailID;
