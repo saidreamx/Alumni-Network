@@ -37,27 +37,23 @@ public class logIn extends Activity {
         logIn = (Button) findViewById(R.id.login);
         logIn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v)
-            {
+            public void onClick(View v) {
                 String email = editTextEmail.getText().toString();
                 String password = editTextpassword.getText().toString();
-                   // log_me_in(email, password);
+                // log_me_in(email, password);
                 //logme_in();
                 log_me_in(email, password);
             }
         });
     }
 
-    public void log_me_in(String email, String password)
-    {
+    public void log_me_in(String email, String password) {
         if ((!email.contains("@")) || (email.length() < 10)) {
             Toast.makeText(this, "Invalid Email", Toast.LENGTH_SHORT).show();
         }
         if (password.length() < 5) {
             Toast.makeText(this, "Password Too Short", Toast.LENGTH_SHORT).show();
-        }
-        else
-        {
+        } else {
             RestAdapter adapter = new RestAdapter.Builder()
                     .setEndpoint(ROOT_URL) //Setting the Root URL
                     .build();
@@ -76,17 +72,15 @@ public class logIn extends Activity {
                                 //Reading the output in the string
                                 output = reader.readLine();
                                 Log.e("OUTPUT: ", output);
-                               if (output.equals("validation successful")) {
-                                   SharedPreferences mango = getSharedPreferences("mango", Activity.MODE_PRIVATE);
-                                   SharedPreferences.Editor my_editor = mango.edit();
-                                   my_editor.putBoolean("loggedin", true);
-                                   my_editor.apply();
+                                if (output.equals("validation successful")) {
+                                    SharedPreferences mango = getSharedPreferences("mango", Activity.MODE_PRIVATE);
+                                    SharedPreferences.Editor my_editor = mango.edit();
+                                    my_editor.putBoolean("loggedin", true);
+                                    my_editor.apply();
                                     Intent intent = new Intent(logIn.this, onePerson.class);
                                     startActivity(intent);
-                                   finish();
-                                }
-                                else
-                                {
+                                    finish();
+                                } else {
                                     Toast.makeText(logIn.this, "Login Error, Incorrect Email or Password", Toast.LENGTH_SHORT).show();
                                 }
                             } catch (IOException e) {
@@ -104,8 +98,7 @@ public class logIn extends Activity {
         }
     }
 
-    void logme_in()
-    {
+    void logme_in() {
         Intent intent = new Intent(logIn.this, onePerson.class);
         startActivity(intent);
     }

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#c5c8cc"
+    >
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="40dp"
+
+        >
+        <EditText
+            android:id="@+id/post_pro"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="ENTER THE TEXT"
+            android:textColor="#143160"
+            android:inputType="textEmailAddress"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginBottom="60dp"
+            />
+
+
+    </RelativeLayout>
+    <Button
+        android:id="@+id/send_post"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="POst"
+        android:layout_alignParentBottom="true"
+        android:background="#0f2b59" />
+</RelativeLayout>

@@ -1,5 +1,6 @@
 package com.example.sanjeev.alumninetwork.discussion_forum;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -8,9 +9,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 import com.example.sanjeev.alumninetwork.R;
+import com.example.sanjeev.alumninetwork.profileInfo.projectAdd;
+
 import java.io.BufferedReader;
 
 import retrofit.Callback;
@@ -33,6 +37,7 @@ public class postByPeople extends AppCompatActivity {
     int post_id;
     int size2;
     int limit = 0;
+    ImageButton send_post;
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -40,10 +45,21 @@ public class postByPeople extends AppCompatActivity {
         setContentView(R.layout.list_view_for_post);
         Log.e("CREATE OF POSTBY PEOPLE","contentview set");
         lv = (ListView) findViewById(R.id.listView_in_post);
+        send_post  =(ImageButton) findViewById(R.id.add_post);
         get_posts();
+        send_post.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                add_new_post();
+            }
+        });
     }
 
-
+void add_new_post()
+{
+    Intent intent = new Intent(this, send_post_page.class);
+    startActivity(intent);
+}
 
     void get_posts()
     {
@@ -55,7 +71,6 @@ public class postByPeople extends AppCompatActivity {
                 .build();
         postAPI api = adapter.create(postAPI.class);
         api.getpost(
-                limit,
                 new Callback<wrapper_post_model>() {
                     @Override
                     public void success(wrapper_post_model result, Response response) {
@@ -63,7 +78,7 @@ public class postByPeople extends AppCompatActivity {
                         responsedata2 = result;
                         size2 = responsedata2.getpost().size();
                         Log.e("Response", responsedata2.toString());
-                        Log.e("getting results", responsedata2.getpost().get(0).getPost_name());
+                        Log.e("getting results", responsedata2.getpost().get(0).getPost_data());
                         Log.e("CREATE OF POSTBY PEOPLE","found list view");
                         posts = new String[size2];
                         comments = new String[size2];

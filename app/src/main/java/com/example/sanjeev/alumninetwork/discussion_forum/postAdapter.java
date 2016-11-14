@@ -46,7 +46,7 @@ public class postAdapter  extends BaseAdapter {
     Button load_more;
     @Override
     public int getCount() {
-        return 5;
+        return posts.length;
     }
 
     @Override

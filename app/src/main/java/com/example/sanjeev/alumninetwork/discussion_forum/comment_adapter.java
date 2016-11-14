@@ -3,6 +3,7 @@ package com.example.sanjeev.alumninetwork.discussion_forum;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,7 +35,7 @@ public class comment_adapter extends BaseAdapter
     }
     @Override
     public int getCount() {
-        return 5;
+        return comments.length;
     }
 
     @Override
@@ -44,6 +45,7 @@ public class comment_adapter extends BaseAdapter
         commentor_image = (CircularImageView)rowView.findViewById(R.id.commentor_pic);
         comment = (TextView) rowView.findViewById(R.id.comment);
         commentor_name = (TextView) rowView.findViewById(R.id.name_of_commentor);
+        Log.e("POSITIONIS:", position+"");
         comment.setText(comments[position]);
         commentor_name.setText(names[position]);
         commentor_image.setImageBitmap(dps[position]);

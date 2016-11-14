@@ -1,5 +1,4 @@
 Android Studio: Android Studio is the official Integrated Development Environment (IDE) for Android application development, based on IntelliJ IDEA. Along with all amazing features of IntelliJ editor, Android studio helps in following ways:
-
 The project management tool inside Anroid Studio is Gradle Build system. It is very flexible and easy for developer to cope with.
 A fast and feature-rich emulator  has been provided for testing purposes.
 A unified environment where you can develop for all Android devices
@@ -11,15 +10,28 @@ C++ and NDK support
 Support for building Android Wear apps
 Built-in support for Google Cloud Platform, making it easy to integrate Google Cloud Messaging and App Engine
 
+
+
 Serverspace: We have hosted our Application on hostinger.in. All the php scripts are put o it. Through our Application we make a request to this server and geta json as result.
 
-Retrofit: Retrofit is a Type-safe HTTP client for Android and Java. It has been developed by Square community and put under open source. Retrofit is an awesome library which enables the developer to make http requests on server without writing lots of lengthy code. 
+
+LIBRARIES USED:
+
+RETROFIT: 
+Retrofit is a Type-safe HTTP client for Android and Java. It has been developed by Square community and put under open source. Retrofit is an awesome library which enables the developer to make http requests on server without writing lots of lengthy code. 
 Retrofit can be added into project by simply adding into dependencies:
 
-compile 'com.squareup.retrofit2:retrofit:2.1.0'
-
+compile 'com.squareup.retrofit:retrofit:1.9.0'
 We have used retrofit to communicate with server.
 
+PICASSO: 
+Picasso is a very precious libarary written by square for downloading image from server. It is very easy to use and saves the user from writting lots of boilerplate. We have used it to download profile image from hostinger server.
+Just a line of code integares picasso to our development environment:
+
+compile 'com.squareup.picasso:picasso:2.5.2'
+
+JAVA MAIL API:
+The JavaMailTM API provides classes that model a mail system. This package defines classes that are common to all mail systems. The javax.mail.internet package defines classes that are specific to mail systems based on internet standards such as MIME, SMTP, POP3, and IMAP.  The JavaMail API provides a set of abstract classes defining objects that comprise a mail system. It is an optional package (standard extension) for reading, composing, and sending electronic messages. We ahve used it to send OTP to the user for account verification.
 
 IMplementation:
 
@@ -32,3 +44,4 @@ We first created database with all our tables using various mysql commands inclu
  Application development:
  We have developed our application in android studio for minimum sdk 19. We have used certain open source libraries like retrofit to have a clean code.
  All the development has been done in JAVA programing language. The layouts have been defined in .xml format.
+ 

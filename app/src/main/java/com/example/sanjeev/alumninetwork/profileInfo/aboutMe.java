@@ -139,6 +139,8 @@ public class aboutMe extends Fragment implements View.OnClickListener {
                         SID = responseData.getprofile().get(0).getS_id();
                         Log.e("Response", responseData.toString());
                         Log.e("getting results", responseData.getprofile().get(0).getS_f_name());
+                        database.name_of_current_user = responseData.getprofile().get(0).getS_f_name()
+                                + " "+ responseData.getprofile().get(0).getS_l_name();
                         showitems();
                         SharedPreferences sp =getActivity().getSharedPreferences("mango", Activity.MODE_PRIVATE);
                         if (sp.contains("uploaded")) retrieve_image();

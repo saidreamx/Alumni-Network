@@ -8,5 +8,5 @@ import retrofit.http.Query;
 public interface postAPI {
 
     @GET("/get_post.php")
-    void getpost(@Query("limit") int limit, Callback<wrapper_post_model> callback);
+    void getpost(Callback<wrapper_post_model> callback);
 }

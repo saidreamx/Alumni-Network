@@ -28,7 +28,7 @@
         <activity android:name=".profileInfo.projectAdd"/>
         <activity android:name=".discussion_forum.postByPeople"/>
         <activity android:name=".discussion_forum.commentsByPeople"/>
-
+        <activity android:name=".discussion_forum.send_post_page"/>
     </application>
 
 </manifest>
