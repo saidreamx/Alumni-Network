@@ -71,8 +71,6 @@ import retrofit.client.Response;
 import retrofit.mime.TypedFile;
 
 public class aboutMe extends Fragment implements View.OnClickListener {
-    public static final String UPLOAD_URL = "http://getsanjeev.esy.es/upload.php";
-    public static final String UPLOAD_KEY = "image";
     public static int SID = 0;
     ImageButton edit_cover;
     int flag_first_time = 0;

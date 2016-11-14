@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.example.sanjeev.alumninetwork.R;
+import com.example.sanjeev.alumninetwork.discussion_forum.postByPeople;
 
 public class postsByPerson extends Fragment
 {
@@ -24,7 +25,7 @@ public class postsByPerson extends Fragment
             @Override
             public void onClick(View v)
             {
-                Intent intent = new Intent(getContext(), postsByPerson.class);
+                Intent intent = new Intent(getContext(), postByPeople.class);
                 startActivity(intent);
             }
         });
