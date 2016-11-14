@@ -1,7 +1,7 @@
 package com.example.sanjeev.alumninetwork.discussion_forum;
 
 public class post_model {
-    private String post_id;
+    private int post_id;
     private String post_data;
     private String post_name;
     private String post_time;
@@ -10,7 +10,7 @@ public class post_model {
         return post_data;
     }
 
-    public String getPost_id() {
+    public int getPost_id() {
         return post_id;
     }
 
@@ -23,7 +23,7 @@ public class post_model {
         this.post_data = post_data;
     }
 
-    public void setPost_id(String post_id) {
+    public void setPost_id(int post_id) {
         this.post_id = post_id;
     }
 

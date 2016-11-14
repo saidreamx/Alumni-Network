@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <com.mikhaellopez.circularimageview.CircularImageView
+            android:layout_marginTop="20dp"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/one"
+            app:civ_border_color="#EEEEEE"
+            app:civ_border_width="4dp"
+            android:id="@+id/commentor_pic"
+            app:civ_shadow="true"
+            app:civ_shadow_radius="10"
+            app:civ_shadow_color="#8BC34A"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/name_of_commentor"
+                android:layout_marginTop="35dp"
+                android:textSize="18dp"
+                android:textColor="#0f2b59"
+                android:text="Sanjeev Dubey"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#0f2b59"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:textSize="15dp"
+        android:id="@+id/comment"
+
+        android:text="In the time of technology, what we need is well formed mind, not only a well fillled mind. LIfe is Pain highness, anyonewho says differently is selling something "/>
+
+
+</LinearLayout>
+

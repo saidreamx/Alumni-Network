@@ -27,9 +27,7 @@
         <activity android:name=".signUp.mail_Developer"/>
         <activity android:name=".profileInfo.projectAdd"/>
         <activity android:name=".discussion_forum.postByPeople"/>
-
-
-
+        <activity android:name=".discussion_forum.commentsByPeople"/>
 
     </application>
 
