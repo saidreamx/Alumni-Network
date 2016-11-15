@@ -74,7 +74,9 @@ public class signUp extends Fragment
                 }
                 else
                 {
+                    Log.e("EMAIL N PASSWORD", email+" "+ password);
                     insertUser(email, password);
+
                 }
             }
         });

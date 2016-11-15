@@ -109,10 +109,10 @@ public class aboutMe extends Fragment implements View.OnClickListener {
         search_btn = (Button) view.findViewById(R.id.search_btn);
         edit_cover.setOnClickListener(this);
         search_btn.setOnClickListener(this);
-        SharedPreferences mango = getActivity().getSharedPreferences("mango", Activity.MODE_PRIVATE);
-        String email = mango.getString("email_ID", "supiou");
+        SharedPreferences mango = getActivity().getSharedPreferences("mango", getActivity().MODE_PRIVATE);
+        String email = mango.getString("emailID", "getsa");
         getdata(email);
-        Log.e("GOING into retrieve","FUNCTION");
+        Log.e("GOING into retrieve", "FUNCTION");
         return view;
     }
 
@@ -125,7 +125,6 @@ public class aboutMe extends Fragment implements View.OnClickListener {
                 .setLogLevel(RestAdapter.LogLevel.FULL)
                 .build();
         final String message;
-        Log.e("SECOND", "ENTERED ON INSERT USER");
         profileAPI api = adapter.create(profileAPI.class);
         api.insertUser(
                 //Passing the values by getting it from editTexts
@@ -136,14 +135,19 @@ public class aboutMe extends Fragment implements View.OnClickListener {
                     public void success(wrapper_profile_model result, Response response) {
                         BufferedReader reader = null;
                         responseData = result;
-                        SID = responseData.getprofile().get(0).getS_id();
-                        Log.e("Response", responseData.toString());
-                        Log.e("getting results", responseData.getprofile().get(0).getS_f_name());
-                        database.name_of_current_user = responseData.getprofile().get(0).getS_f_name()
-                                + " "+ responseData.getprofile().get(0).getS_l_name();
-                        showitems();
-                        SharedPreferences sp =getActivity().getSharedPreferences("mango", Activity.MODE_PRIVATE);
-                        if (sp.contains("uploaded")) retrieve_image();
+
+                        Log.e("Response", responseData.getprofile().toString());
+                        if (responseData.getprofile().size()>0) {
+                            SID = responseData.getprofile().get(0).getS_id();
+                            Log.e("getting results", responseData.getprofile().get(0).getS_f_name());
+                            database.name_of_current_user = responseData.getprofile().get(0).getS_f_name()
+                                    + " " + responseData.getprofile().get(0).getS_l_name();
+                            showitems();
+                            SharedPreferences sp = getActivity().getSharedPreferences("mango", Activity.MODE_PRIVATE);
+                            if (sp.contains("uploaded")) retrieve_image();
+                        }else{
+                            Toast.makeText(getContext(), "No content found", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override
@@ -325,8 +329,7 @@ public class aboutMe extends Fragment implements View.OnClickListener {
         return encodedImage;
     }
 
-    void retrieve_image()
-    {
+    void retrieve_image() {
         int s_id = aboutMe.SID;
         Log.e("MY SID", Integer.toString(s_id));
         RestAdapter adapter = new RestAdapter.Builder()
@@ -344,19 +347,16 @@ public class aboutMe extends Fragment implements View.OnClickListener {
                         BufferedReader reader = null;
                         responsedata4 = result;
                         String output = "";
-                        try
-                        {
+                        try {
                             reader = new BufferedReader(new InputStreamReader(result.getBody().in()));
                             //Reading the output in the string
                             output = reader.readLine();
-                        }
-                        catch (IOException e)
-                        {
+                        } catch (IOException e) {
                             Log.e("EXCEPTION", e.toString());
                         }
-                        Log.e("getimage function", output);
-                        String image_source = ROOT_URL+"/uploads/"+output;
-                        Log.e("IMAGE URL",image_source);
+//                        Log.e("getimage function", output);
+                        String image_source = ROOT_URL + "/uploads/" + output;
+                        Log.e("IMAGE URL", image_source);
                         Picasso.with(getContext()).load(image_source).into(my_photo);
                     }
 
@@ -370,8 +370,7 @@ public class aboutMe extends Fragment implements View.OnClickListener {
     }
 
 
-    void upload_image_retrofit(File file)
-    {
+    void upload_image_retrofit(File file) {
         RestAdapter adapter = new RestAdapter.Builder()
                 .setEndpoint(ROOT_URL) //Setting the Root URL
                 .setLogLevel(RestAdapter.LogLevel.FULL)
@@ -382,29 +381,24 @@ public class aboutMe extends Fragment implements View.OnClickListener {
         api.upload(
                 typedFile,
                 s_id,
-                new Callback<Response>()
-                {
-            @Override
-            public void success(Response result, Response response) {
+                new Callback<Response>() {
+                    @Override
+                    public void success(Response result, Response response) {
 
-                Response myresonse = result;
-                Log.e("iN SENDING IMAGE", result.toString());
-                Log.e("Upload", "success");
-                flag_first_time = 1;
-                SharedPreferences sp =getActivity().getSharedPreferences("mango", Activity.MODE_PRIVATE);
-                SharedPreferences.Editor my_editor = sp.edit();
-                my_editor.putBoolean("uploaded", true);
-                my_editor.apply();
-            }
+                        Response myresonse = result;
+                        Log.e("iN SENDING IMAGE", result.toString());
+                        Log.e("Upload", "success");
+                        flag_first_time = 1;
+                        SharedPreferences sp = getActivity().getSharedPreferences("mango", Activity.MODE_PRIVATE);
+                        SharedPreferences.Editor my_editor = sp.edit();
+                        my_editor.putBoolean("uploaded", true);
+                        my_editor.apply();
+                    }
 
-            @Override
-            public void failure(RetrofitError error) {
-                Log.e("Upload", error.toString());
-            }
-        });
-}
-
-
-
-
+                    @Override
+                    public void failure(RetrofitError error) {
+                        Log.e("Upload", error.toString());
+                    }
+                });
+    }
 }

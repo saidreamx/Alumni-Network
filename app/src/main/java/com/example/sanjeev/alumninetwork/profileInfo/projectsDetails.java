@@ -58,7 +58,7 @@ public class projectsDetails extends Fragment
 
     void getdata() {
         SharedPreferences mango = getActivity().getSharedPreferences("mango", Activity.MODE_PRIVATE);
-        String email = mango.getString("email_ID", "supio");
+        String email = mango.getString("emailID", "getsa");
         String short_email = email;
         short_email = short_email.substring(0, 5);
         Log.e("short_email", short_email);
@@ -81,8 +81,12 @@ public class projectsDetails extends Fragment
                         Log.e("Response", responseData.getprojects().toString());
                         size = responseData.getprojects().size();
                         Log.e("size of array", Integer.toString(size));
-                        Log.e("getting results", responseData.getprojects().get(1).getPtitle());
-                        showitems();
+                        if (size>0) {
+                            Log.e("getting results", responseData.getprojects().get(0).getPtitle());
+                            showitems();
+                        }else{
+                            Toast.makeText(getContext(), "No projects found!", Toast.LENGTH_SHORT).show();
+                        }
                     }
 
                     @Override

@@ -47,7 +47,7 @@ public class logIn extends Activity {
         });
     }
 
-    public void log_me_in(String email, String password) {
+    public void log_me_in(final String email, String password) {
         if ((!email.contains("@")) || (email.length() < 10)) {
             Toast.makeText(this, "Invalid Email", Toast.LENGTH_SHORT).show();
         }
@@ -63,6 +63,7 @@ public class logIn extends Activity {
                     new Callback<Response>() {
                         @Override
                         public void success(Response result, Response response) {
+                            Log.e("Response_Login", result.getBody().toString());
                             BufferedReader reader = null;
                             //An string to store output from the server
                             String output = "";
@@ -73,9 +74,11 @@ public class logIn extends Activity {
                                 output = reader.readLine();
                                 Log.e("OUTPUT: ", output);
                                 if (output.equals("validation successful")) {
-                                    SharedPreferences mango = getSharedPreferences("mango", Activity.MODE_PRIVATE);
+                                    SharedPreferences mango = getSharedPreferences("mango", MODE_PRIVATE);
                                     SharedPreferences.Editor my_editor = mango.edit();
                                     my_editor.putBoolean("loggedin", true);
+                                    Log.e("email", email.substring(0, 5));
+                                    my_editor.putString("emailID", email.substring(0, 5));
                                     my_editor.apply();
                                     Intent intent = new Intent(logIn.this, onePerson.class);
                                     startActivity(intent);
