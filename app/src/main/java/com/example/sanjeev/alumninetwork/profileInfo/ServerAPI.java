@@ -15,6 +15,6 @@ public interface ServerAPI {
     @POST("/upload.php")
     void upload(
             @Part("image") TypedFile file,
-            @Part("sid") int s_id,
+            @Part("s_id") int s_id,
             Callback<Response> callback);
 }

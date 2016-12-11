@@ -184,7 +184,6 @@ public class aboutMe extends Fragment implements View.OnClickListener {
             bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
             Log.e("Test_Bitmap", "Absolute Path " + file.getAbsolutePath() + "  real path " + getRealPathFromURI(imageUri));
             my_photo.setImageBitmap(bitmap);
-            //uploadImage();
             upload_image_retrofit(file);
         }
     }
@@ -217,7 +216,6 @@ public class aboutMe extends Fragment implements View.OnClickListener {
     public void onClick(View v) {
         if (v == edit_cover) {
             showFileChooser();
-            //uploadImage();
         }
         if (v == search_btn) {
             String person = search.getText().toString();
@@ -261,15 +259,8 @@ public class aboutMe extends Fragment implements View.OnClickListener {
     }
 
     public Intent getPickImageChooserIntent() {
-
-// Determine Uri of camera image to  save.
-
-
         List<Intent> allIntents = new ArrayList<>();
         PackageManager packageManager = getActivity().getPackageManager();
-
-// collect all camera intents
-
 // collect all gallery intents
         Intent galleryIntent = new Intent(Intent.ACTION_GET_CONTENT);
         galleryIntent.setType("image/*");
@@ -351,6 +342,7 @@ public class aboutMe extends Fragment implements View.OnClickListener {
                             reader = new BufferedReader(new InputStreamReader(result.getBody().in()));
                             //Reading the output in the string
                             output = reader.readLine();
+                            Log.e("READER KI VALUE", output);
                         } catch (IOException e) {
                             Log.e("EXCEPTION", e.toString());
                         }
@@ -371,6 +363,7 @@ public class aboutMe extends Fragment implements View.OnClickListener {
 
 
     void upload_image_retrofit(File file) {
+
         RestAdapter adapter = new RestAdapter.Builder()
                 .setEndpoint(ROOT_URL) //Setting the Root URL
                 .setLogLevel(RestAdapter.LogLevel.FULL)
@@ -382,19 +375,29 @@ public class aboutMe extends Fragment implements View.OnClickListener {
                 typedFile,
                 s_id,
                 new Callback<Response>() {
+                    BufferedReader reader = null;
+                    //An string to store output from the server
+                    String output = "";
                     @Override
                     public void success(Response result, Response response) {
-
-                        Response myresonse = result;
-                        Log.e("iN SENDING IMAGE", result.toString());
-                        Log.e("Upload", "success");
+                       try
+                       {
+                           reader = new BufferedReader(new InputStreamReader(result.getBody().in()));
+                           //Reading the output in the string
+                           output = reader.readLine();
+                       }
+                       catch (IOException e)
+                       {
+                           e.printStackTrace();
+                       }
+                        Log.e("OUPUT LINE", output);
+                        Log.e("Upload", "successfully uploaded");
                         flag_first_time = 1;
                         SharedPreferences sp = getActivity().getSharedPreferences("mango", Activity.MODE_PRIVATE);
                         SharedPreferences.Editor my_editor = sp.edit();
                         my_editor.putBoolean("uploaded", true);
                         my_editor.apply();
                     }
-
                     @Override
                     public void failure(RetrofitError error) {
                         Log.e("Upload", error.toString());
