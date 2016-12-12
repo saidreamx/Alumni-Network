@@ -1,8 +1,5 @@
 package com.example.sanjeev.alumninetwork.discussion_forum;
 
-import android.app.Activity;
-import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -15,30 +12,30 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.sanjeev.alumninetwork.APIs.commentAPI;
+import com.example.sanjeev.alumninetwork.APIs.sendcommentAPI;
+import com.example.sanjeev.alumninetwork.POJO_wrapper.wrapper_comment_model;
 import com.example.sanjeev.alumninetwork.R;
-import com.example.sanjeev.alumninetwork.peopleList.database;
-import com.example.sanjeev.alumninetwork.profileInfo.onePerson;
-import com.example.sanjeev.alumninetwork.signUp.logInAPI;
-
+import com.example.sanjeev.alumninetwork.adapters.comment_adapter;
+import com.example.sanjeev.alumninetwork.splash.database;
 import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+
+// This class represents the activity when user clicks on comment button on any of community posts.
+// In this activity we have two functions get_comments and send_comments to send and receive comments through Post ID.
 public class commentsByPeople extends AppCompatActivity {
+
     int PID;
     int size2;
-    private String[] posts;
     private String[] comments;
     private String[] times;
     private String[] names;
     private Bitmap[] dps;
     Button send_comment;
-    Response comment_response;
     ListView lv;
     EditText comment_box;
     public static final String ROOT_URL = "http://getsanjeev.esy.es";
@@ -52,7 +49,7 @@ public class commentsByPeople extends AppCompatActivity {
         PID = database.current_post_id_mine;
         send_comment = (Button) findViewById(R.id.comment_btn2);
         comment_box = (EditText) findViewById(R.id.comment_et);
-        getcomments(PID);
+        get_comments(PID);
         send_comment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +77,7 @@ public class commentsByPeople extends AppCompatActivity {
                         public void success(Response result, Response response) {
                             BufferedReader reader = null;
                             String output = "";
-                            Toast.makeText(commentsByPeople.this, "commented", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(commentsByPeople.this, "Commented Successfully", Toast.LENGTH_SHORT).show();
                         }
 
                         @Override
@@ -93,7 +90,7 @@ public class commentsByPeople extends AppCompatActivity {
     }
 
 
-    void getcomments(int PID) {
+    void get_comments(int PID) {
         Log.e("POST_ID", PID + "");
         RestAdapter adapter = new RestAdapter.Builder()
                 .setEndpoint(ROOT_URL) //Setting the Root URL
@@ -110,10 +107,6 @@ public class commentsByPeople extends AppCompatActivity {
                         size2 = responsedata2.getcomment().size();
                         if(size2>0)
                         {
-                            Log.e("SIZE OF COMMENT", size2 + "");
-                            Log.e("Response", responsedata2.toString());
-                            Log.e("getting results", responsedata2.getcomment().get(0).getComment());
-                            Log.e("CREATE OF POSTBY PEOPLE", "found list view");
                             comments = new String[size2];
                             names = new String[size2];
                             times = new String[size2];
@@ -121,24 +114,20 @@ public class commentsByPeople extends AppCompatActivity {
                             for (int i = 0; i < size2; i++) {
                                 comments[i] = responsedata2.getcomment().get(i).getComment();
                                 names[i] = responsedata2.getcomment().get(i).getName();
-                                Log.e("NAME OF PERSON", names[i]);
                                 times[i] = responsedata2.getcomment().get(i).getTime();
                                 dps[i] = BitmapFactory.decodeResource(getResources(), R.drawable.one);
                             }
                             comment_adapter adapter = new comment_adapter(getApplicationContext(), names, comments, times, dps);
-                            Log.e("CREATE OF POSTBY PEOPLE", "created adapter");
                             lv.setAdapter(adapter);
-                            Log.e("CREATE OF POSTBY PEOPLE", "set adapter");
                         }
                         else {
-                            Toast.makeText(commentsByPeople.this, "NO_comments", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(commentsByPeople.this, "No comments available", Toast.LENGTH_SHORT).show();
                         }
                     }
 
                     @Override
                     public void failure(RetrofitError error) {
                         Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
-                        Log.e("SIXTH", error.toString());
                     }
                 }
         );

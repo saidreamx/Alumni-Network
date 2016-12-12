@@ -6,10 +6,10 @@ if($_SERVER['REQUEST_METHOD']=='GET')
  //Getting post data 
   $s_f_name = $_GET["s_f_name"]; 
   $s_l_name = $_GET["s_l_name"]; 
-if(isset($_GET['s_f_name']) & !empty($_GET['s_l_name'])){
+if(isset($_GET['s_f_name']) || !empty($_GET['s_l_name'])){
   //echo $email;
   require_once('dbConnect.php');
-  $sql = "SELECT s_f_name,s_l_name FROM student WHERE s_f_name LIKE '$s_f_name%' OR  s_l_name = '$s_l_name%'";
+  $sql = "SELECT s_f_name,s_l_name FROM student WHERE s_f_name LIKE '$s_f_name%' OR  s_l_name LIKE '$s_l_name%'";
 //echo $sql;
   $res = mysqli_query($con,$sql);
   $result = array();

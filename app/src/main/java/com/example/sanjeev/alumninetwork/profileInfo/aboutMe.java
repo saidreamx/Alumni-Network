@@ -1,7 +1,7 @@
 package com.example.sanjeev.alumninetwork.profileInfo;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
+
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -11,11 +11,8 @@ import android.content.pm.ResolveInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Environment;
 import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.annotation.Nullable;
@@ -28,64 +25,49 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
+
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.sanjeev.alumninetwork.POJO.make_others_profileAPI;
-import com.example.sanjeev.alumninetwork.POJO.peopleAPI;
-import com.example.sanjeev.alumninetwork.POJO.wrapper_people_model;
+import com.example.sanjeev.alumninetwork.APIs.ServerAPI;
+import com.example.sanjeev.alumninetwork.APIs.peopleAPI;
+import com.example.sanjeev.alumninetwork.APIs.photoAPI;
+import com.example.sanjeev.alumninetwork.APIs.profileAPI;
+import com.example.sanjeev.alumninetwork.POJO_wrapper.wrapper_people_model;
+import com.example.sanjeev.alumninetwork.POJO_wrapper.wrapper_profile_model;
 import com.example.sanjeev.alumninetwork.R;
-import com.example.sanjeev.alumninetwork.peopleList.customAdapter;
-import com.example.sanjeev.alumninetwork.peopleList.database;
+import com.example.sanjeev.alumninetwork.splash.database;
 import com.example.sanjeev.alumninetwork.peopleList.showAlumniList;
-import com.example.sanjeev.alumninetwork.signUp.collectionLoginSignup;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
-
-
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
-import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-
-import javax.net.ssl.HttpsURLConnection;
-
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 import retrofit.mime.TypedFile;
 
+// This class represents the first tab of tab view which is profile page of the user.
+// Profile picture change.
+// Search button to find people in the network has been given.
+
 public class aboutMe extends Fragment implements View.OnClickListener {
     public static int SID = 0;
     ImageButton edit_cover;
     int flag_first_time = 0;
     Bitmap bitmap;
-    String ImageDecode;
     int PICK_IMAGE_REQUEST = 1;
-    int IMG_RESULT = 1;
     int size2;
     onePerson mactivity;
-    //  private Bitmap bitmap;
-    public Context my_context;
     public static final String ROOT_URL = "http://getsanjeev.esy.es";
     wrapper_profile_model responseData;
     wrapper_people_model responsedata2;
-    ImageSendData responsedata3;
     Response responsedata4;
     TextView name_tv;
     TextView course_tv;
@@ -116,6 +98,7 @@ public class aboutMe extends Fragment implements View.OnClickListener {
         return view;
     }
 
+    // this function gets the information of the profile page of user through his email ID.
     void getdata(String email) {
         String short_email = email;
         short_email = short_email.substring(0, 5);
@@ -160,6 +143,7 @@ public class aboutMe extends Fragment implements View.OnClickListener {
 
     }
 
+    // to display fetched items (from get_data) into the textboxes.
     void showitems() {
         String name = responseData.getprofile().get(0).getS_f_name() + " " + responseData.getprofile().get(0).getS_l_name();
         String course = responseData.getprofile().get(0).getS_course();
@@ -167,6 +151,7 @@ public class aboutMe extends Fragment implements View.OnClickListener {
         course_tv.setText(course);
     }
 
+    // This is to trigger event to allow user to select image from gallery or Storage in phone
     private void showFileChooser() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -174,6 +159,7 @@ public class aboutMe extends Fragment implements View.OnClickListener {
         startActivityForResult(getPickImageChooserIntent(), PICK_IMAGE_REQUEST);
     }
 
+    // when an event is selected in showFileChooser function, control comes here.
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -184,10 +170,11 @@ public class aboutMe extends Fragment implements View.OnClickListener {
             bitmap = BitmapFactory.decodeFile(file.getAbsolutePath());
             Log.e("Test_Bitmap", "Absolute Path " + file.getAbsolutePath() + "  real path " + getRealPathFromURI(imageUri));
             my_photo.setImageBitmap(bitmap);
-            upload_image_retrofit(file);
+            upload_image_retrofit(file);// The selected picture is sent to server for upgradation in database
         }
     }
 
+    //get path of image when selected from gallery or media storage
     private String getRealPathFromURI(Uri contentURI) {
         String result;
         Cursor cursor = getActivity().getContentResolver().query(contentURI, null, null, null, null);
@@ -201,6 +188,7 @@ public class aboutMe extends Fragment implements View.OnClickListener {
         }
         return result;
     }
+
 
     public Uri getPickImageResultUri(Intent data) {
         boolean isCamera = true;
@@ -235,7 +223,6 @@ public class aboutMe extends Fragment implements View.OnClickListener {
                 .build();
         peopleAPI api = adapter.create(peopleAPI.class);
         api.getUser(
-                //Passing the values by getting it from editTexts
                 s_f_name, s_l_name,
                 //Creating an anonymous callback
                 new Callback<wrapper_people_model>() {
@@ -312,14 +299,6 @@ public class aboutMe extends Fragment implements View.OnClickListener {
         mactivity = (onePerson) getActivity();
     }
 
-    public String getStringImage(Bitmap bmp) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        byte[] imageBytes = baos.toByteArray();
-        String encodedImage = Base64.encodeToString(imageBytes, Base64.DEFAULT);
-        return encodedImage;
-    }
-
     void retrieve_image() {
         int s_id = aboutMe.SID;
         Log.e("MY SID", Integer.toString(s_id));
@@ -329,7 +308,6 @@ public class aboutMe extends Fragment implements View.OnClickListener {
                 .build();
         photoAPI api = adapter.create(photoAPI.class);
         api.getphoto(
-                //Passing the values by getting it from editTexts
                 s_id,
                 //Creating an anonymous callback
                 new Callback<Response>() {

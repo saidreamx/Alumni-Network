@@ -4,17 +4,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.sanjeev.alumninetwork.POJO.make_others_profileAPI;
-import com.example.sanjeev.alumninetwork.POJO.projectAPI;
-import com.example.sanjeev.alumninetwork.POJO.projectforothersAPI;
-import com.example.sanjeev.alumninetwork.POJO.wrapper_people_model;
-import com.example.sanjeev.alumninetwork.POJO.wrapper_project_model;
+import com.example.sanjeev.alumninetwork.APIs.make_others_profileAPI;
+import com.example.sanjeev.alumninetwork.APIs.photoAPI;
+import com.example.sanjeev.alumninetwork.APIs.projectforothersAPI;
+import com.example.sanjeev.alumninetwork.POJO_wrapper.wrapper_profile_model;
+import com.example.sanjeev.alumninetwork.POJO_wrapper.wrapper_project_model;
 import com.example.sanjeev.alumninetwork.R;
 import com.mikhaellopez.circularimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
@@ -85,19 +82,21 @@ public class showOthersProfile extends AppCompatActivity {
                         String output = "";
                         try
                         {
+                            Log.e("HUMANS IOF CIC","humans in the dark");
                             reader = new BufferedReader(new InputStreamReader(result.getBody().in()));
-                            //Reading the output in the string
                             output = reader.readLine();
+                            Log.e("SANJEEV JI", output);
+                            String image_source = ROOT_URL+"uploads/"+output;
+                            Log.e("url imge for others",image_source);
+                            Picasso.with(getApplicationContext()).load(image_source).into(pro_photo);
+                            Log.e("HUMANS OF CIC","humans in the dark");
+
                         }
                         catch (IOException e)
                         {
                             Log.e("EXCEPTION", e.toString());
                         }
-                        Log.e("getimage function", output);
-                        String image_source = ROOT_URL+"/uploads/"+output;
-                        Log.e("IMAGE URL",image_source);
-                        Picasso.with(getApplicationContext()).load(image_source).into(pro_photo);
-                    }
+                        }
 
                     @Override
                     public void failure(RetrofitError error) {
@@ -117,7 +116,6 @@ public class showOthersProfile extends AppCompatActivity {
                 .build();
         make_others_profileAPI api = adapter.create(make_others_profileAPI.class);
         api.getUser(
-                //Passing the values by getting it from editTexts
                 name,
                 //Creating an anonymous callback
                 new Callback<wrapper_profile_model>() {
@@ -129,7 +127,7 @@ public class showOthersProfile extends AppCompatActivity {
                         SID = responsedata2.getprofile().get(0).getS_id();
                         Log.e("getting results human", responsedata2.getprofile().get(0).getS_f_name());
                         get_array_data(name);
-                        retrieve_image();
+
                     }
 
                     @Override
@@ -165,28 +163,37 @@ public class showOthersProfile extends AppCompatActivity {
                     public void success(wrapper_project_model result, Response response) {
                         Log.e("in the success of proj", result.toString());
                         responseData = result;
-                        size = responseData.getprojects().size();
                         Log.e("Response", responseData.getprojects().toString());
                         size = responseData.getprojects().size();
                         //Log.e("size of array", Integer.toString(size));
-                        Log.e("getting results", responseData.getprojects().get(1).getPtitle());
-                        array = new String[size];
-                        for (int i = 0; i < size; i++) {
-                            array[i] = responseData.getprojects().get(i).getPtitle() + "\n" + responseData.getprojects().get(i).getPmentor() +
-                                    "\n" + responseData.getprojects().get(i).getPdescription();
-                        }
-                        int x = 0;
-                        text = "";
-                        Log.e("befor while", "PPPPP");
-                        while (x < size) {
-                            text = text + array[x] + "\n\n";
-                            x++;
-                        }
-                        Log.e("DATA", text);
-                        tv.setText(text);
-                        Log.e("Returning TEXT", text);
-                        set_data();
+                        if(size > 0)
+                        {
+                            Log.e("getting results", responseData.getprojects().get(1).getPtitle());
+                            array = new String[size];
+                            for (int i = 0; i < size; i++) {
+                                array[i] = responseData.getprojects().get(i).getPtitle() + "\n" + responseData.getprojects().get(i).getPmentor() +
+                                        "\n" + responseData.getprojects().get(i).getPdescription();
+                            }
+                            int x = 0;
+                            text = "";
+                            Log.e("befor while", "PPPPP");
+                            while (x < size) {
+                                text = text + array[x] + "\n\n";
+                                x++;
+                            }
+                            Log.e("DATA", text);
+                            tv.setText(text);
+                            Log.e("Returning TEXT", text);
+                            set_data();
 
+                        }
+
+                        else
+                        {
+                            Toast.makeText(showOthersProfile.this, "No projects done", Toast.LENGTH_SHORT).show();
+                        }
+
+                        retrieve_image();
                     }
 
                     @Override

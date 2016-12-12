@@ -1,7 +1,6 @@
 package com.example.sanjeev.alumninetwork.profileInfo;
 
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -15,11 +14,9 @@ import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.example.sanjeev.alumninetwork.POJO.projectAPI;
-import com.example.sanjeev.alumninetwork.POJO.wrapper_project_model;
+import com.example.sanjeev.alumninetwork.APIs.projectAPI;
+import com.example.sanjeev.alumninetwork.POJO_wrapper.wrapper_project_model;
 import com.example.sanjeev.alumninetwork.R;
-import com.example.sanjeev.alumninetwork.peopleList.customAdapter;
-import com.example.sanjeev.alumninetwork.signUp.collectionLoginSignup;
 
 import java.io.BufferedReader;
 

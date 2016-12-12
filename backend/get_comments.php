@@ -4,7 +4,7 @@ if($_SERVER['REQUEST_METHOD']=='GET')
   $PID = $_GET["PID"]; 
 
   require_once('dbConnect.php');
-  $sql = "SELECT * FROM post where post_id = $PID";
+  $sql = "SELECT * FROM comment where post_id = $PID";
   $res = mysqli_query($con,$sql);
   $result = array();
   while($row = mysqli_fetch_array($res))

@@ -7,7 +7,7 @@ if($_SERVER['REQUEST_METHOD']=='POST')
  $name = $_POST['name'];
  require_once('dbConnect.php');
 
- $sql = "INSERT INTO comment VALUES ($post_id, $comment, $name)";
+ $sql = "INSERT INTO comment VALUES ('$post_id', '$comment', '$name', DEFAULT)";
  
  //$check = mysqli_fetch_array(mysqli_query($con,$sql));  
  if(mysqli_query($con, $sql))

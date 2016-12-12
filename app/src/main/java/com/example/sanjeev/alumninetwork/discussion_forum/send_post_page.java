@@ -8,20 +8,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
+import com.example.sanjeev.alumninetwork.APIs.sendpostAPI;
 import com.example.sanjeev.alumninetwork.R;
-import com.example.sanjeev.alumninetwork.peopleList.database;
-
+import com.example.sanjeev.alumninetwork.splash.database;
 import java.io.BufferedReader;
-
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
 import retrofit.client.Response;
 
+// This class deals with the activity where a user posts something in the community.
 public class send_post_page extends AppCompatActivity
 {
-
     EditText post;
     Button send_post;
     public static final String ROOT_URL = "http://getsanjeev.esy.es";

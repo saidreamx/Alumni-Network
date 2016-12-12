@@ -8,12 +8,14 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import com.example.sanjeev.alumninetwork.APIs.postAPI;
+import com.example.sanjeev.alumninetwork.POJO_wrapper.wrapper_post_model;
 import com.example.sanjeev.alumninetwork.R;
-import com.example.sanjeev.alumninetwork.profileInfo.projectAdd;
+import com.example.sanjeev.alumninetwork.adapters.postAdapter;
 
 import java.io.BufferedReader;
 

@@ -1,14 +1,7 @@
 package com.example.sanjeev.alumninetwork.profileInfo;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.database.Cursor;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,14 +9,12 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
-
 import com.example.sanjeev.alumninetwork.R;
-
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+
+//This class is the tab layout activity for three fragments aboutme, projectdetails and postsbyPerson.
 public class onePerson extends AppCompatActivity {
 
     static Context my_ap;
