@@ -4,6 +4,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -18,7 +19,9 @@ import com.example.sanjeev.alumninetwork.POJO_wrapper.wrapper_comment_model;
 import com.example.sanjeev.alumninetwork.R;
 import com.example.sanjeev.alumninetwork.adapters.comment_adapter;
 import com.example.sanjeev.alumninetwork.splash.database;
+
 import java.io.BufferedReader;
+
 import retrofit.Callback;
 import retrofit.RestAdapter;
 import retrofit.RetrofitError;
@@ -27,7 +30,7 @@ import retrofit.client.Response;
 
 // This class represents the activity when user clicks on comment button on any of community posts.
 // In this activity we have two functions get_comments and send_comments to send and receive comments through Post ID.
-public class commentsByPeople extends AppCompatActivity {
+public class commentsByPeople extends AppCompatActivity implements SwipeRefreshLayout.OnRefreshListener{
 
     int PID;
     int size2;
@@ -35,6 +38,7 @@ public class commentsByPeople extends AppCompatActivity {
     private String[] times;
     private String[] names;
     private Bitmap[] dps;
+    private SwipeRefreshLayout swipe_me;
     Button send_comment;
     ListView lv;
     EditText comment_box;
@@ -45,6 +49,8 @@ public class commentsByPeople extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.comm_iinfo);
+        swipe_me = (SwipeRefreshLayout) findViewById(R.id.swipe);
+        swipe_me.setRefreshing(false);
         lv = (ListView) findViewById(R.id.listView_in_cominfo);
         PID = database.current_post_id_mine;
         send_comment = (Button) findViewById(R.id.comment_btn2);
@@ -56,12 +62,11 @@ public class commentsByPeople extends AppCompatActivity {
                 send_comment();
             }
         });
-
     }
 
     void send_comment() {
         int post_id = database.current_post_id_mine;
-        String comment = comment_box.getText().toString();
+        final String comment = comment_box.getText().toString();
         String person = database.name_of_current_user;
         if (comment.equals("")) {
             Toast.makeText(commentsByPeople.this, "Enter something to Comment", Toast.LENGTH_SHORT).show();
@@ -78,6 +83,8 @@ public class commentsByPeople extends AppCompatActivity {
                             BufferedReader reader = null;
                             String output = "";
                             Toast.makeText(commentsByPeople.this, "Commented Successfully", Toast.LENGTH_SHORT).show();
+                            comment_box.setText("");
+                            onRefresh();
                         }
 
                         @Override
@@ -89,8 +96,8 @@ public class commentsByPeople extends AppCompatActivity {
         }
     }
 
-
-    void get_comments(int PID) {
+    void get_comments(int PID)
+    {
         Log.e("POST_ID", PID + "");
         RestAdapter adapter = new RestAdapter.Builder()
                 .setEndpoint(ROOT_URL) //Setting the Root URL
@@ -124,7 +131,6 @@ public class commentsByPeople extends AppCompatActivity {
                             Toast.makeText(commentsByPeople.this, "No comments available", Toast.LENGTH_SHORT).show();
                         }
                     }
-
                     @Override
                     public void failure(RetrofitError error) {
                         Toast.makeText(getApplicationContext(), error.toString(), Toast.LENGTH_LONG).show();
@@ -132,4 +138,14 @@ public class commentsByPeople extends AppCompatActivity {
                 }
         );
     }
+
+    @Override
+    public void onRefresh()
+    {
+        swipe_me.setRefreshing(true);
+        Log.e("Refreshing" , "INDIA");
+        get_comments(PID);
+        swipe_me.setRefreshing(false);
+    }
+
 }
